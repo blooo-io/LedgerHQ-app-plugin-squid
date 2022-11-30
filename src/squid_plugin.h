@@ -9,10 +9,10 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_PLUGIN_SELECTORS 1
+#define NUM_SQUID_SELECTORS 1
 #define SELECTOR_SIZE        4
 
-#define PLUGIN_NAME "<Plugin Real Name>"
+#define PLUGIN_NAME "Squid"
 
 #define TOKEN_SENT_FOUND     1          //REMOVE IF NOT NEEDED
 #define TOKEN_RECEIVED_FOUND 1 << 1     //REMOVE IF NOT NEEDED
@@ -26,7 +26,7 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];    //REMOVE IF NOT NEEDED
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
 typedef enum {
- <Plugin Function Name>_GENERIC
+ CALL_BRIDGE_CALL
 } pluginSelector_t;
 
 extern const uint8_t *const PLUGIN_SELECTORS[NUM_PLUGIN_SELECTORS];

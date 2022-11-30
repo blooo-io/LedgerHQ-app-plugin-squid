@@ -1,9 +1,9 @@
-#include "<Plugin Name>_plugin.h"
+#include "squid_plugin.h"
 
 // Set UI for the "Send" screen.
 static void set_send_ui(ethQueryContractUI_t *msg, plugin_parameters_t *context) {
     switch (context->selectorIndex) {
-        case <Plugin Function Name>_GENERIC:
+        case CALL_BRIDGE_CALL:
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         default:
@@ -30,7 +30,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, plugin_parameters_t *context)
 // Set UI for "Receive" screen.
 static void set_receive_ui(ethQueryContractUI_t *msg, plugin_parameters_t *context) {
     switch (context->selectorIndex) {
-        case <Plugin Function Name>_GENERIC:
+        case CALL_BRIDGE_CALL:
             strlcpy(msg->title, "Receive", msg->titleLength);
             break;
         default:

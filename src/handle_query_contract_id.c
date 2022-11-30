@@ -1,4 +1,4 @@
-#include "<Plugin Name>_plugin.h"
+#include "squid_plugin.h"
 
 void handle_query_contract_id(void *parameters) {
     ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
@@ -7,7 +7,7 @@ void handle_query_contract_id(void *parameters) {
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     switch (context->selectorIndex) {
-        case <Plugin Function Name>_GENERIC:
+        case CALL_BRIDGE_CALL:
             strlcpy(msg->version, "Function Generic", msg->versionLength);
             break;
         default:

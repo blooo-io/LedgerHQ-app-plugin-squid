@@ -1,4 +1,4 @@
-#include "<Plugin Name>_plugin.h"
+#include "squid_plugin.h"
 
 // Store the amount sent in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
@@ -44,7 +44,7 @@ void handle_provide_parameter(void *parameters) {
         context->offset = 0;
 // To here
         switch (context->selectorIndex) {
-            case <Plugin Function Name>_GENERIC:
+            case CALL_BRIDGE_CALL:
                 handle_plugin_generic(msg, context);
                 break;
             default:

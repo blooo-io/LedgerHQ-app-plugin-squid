@@ -29,13 +29,13 @@ APPVERSION_N     = 0
 APPVERSION_P     = 4
 APPVERSION       = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 
-APPNAME = "<Plugin Name>"
+APPNAME = "squid"
 
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOS)
-ICONNAME=icons/nanos_app_<Plugin Name>.gif
+ICONNAME=icons/nanos_app_squid.gif
 else
-ICONNAME=icons/nanox_app_<Plugin Name>.gif
+ICONNAME=icons/nanox_app_squid.gif
 endif
 
 ################
@@ -161,4 +161,4 @@ include $(BOLOS_SDK)/Makefile.rules
 dep/%.d: %.c Makefile
 
 listvariants:
-	@echo VARIANTS NONE <Plufin Name>
+	@echo VARIANTS NONE squid

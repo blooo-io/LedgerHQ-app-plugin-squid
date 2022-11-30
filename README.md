@@ -1,9 +1,9 @@
 # Badges
 <Plugin Github Action Badger>
 
-# Ledger <Plugin Name> Plugin
+# Ledger squid Plugin
 
-This is a plugin for the Ethereum application which helps parsing and displaying relevant information when signing a <Plugin Name> transaction.
+This is a plugin for the Ethereum application which helps parsing and displaying relevant information when signing a squid transaction.
 
 ## Prerequisite
 
@@ -40,17 +40,17 @@ cd plugin-tools  # go to plugin folder
 ./start.sh       # run the script start.sh
 ```
 The script will build a docker image and attach a console.
-When the docker image is running go to the "app-plugin-<Plugin Name>" folder and build the ".elf" files.
+When the docker image is running go to the "app-plugin-squid" folder and build the ".elf" files.
 ```shell
-cd app-plugin-<Plugin Name>/tests       # go to the tests folder in app-plugin-<Plugin Name>
+cd app-plugin-squid/tests       # go to the tests folder in app-plugin-squid
 ./build_local_test_elfs.sh              # run the script build_local_test_elfs.sh
 ```
 
 ## Tests
 
-To test the plugin go to the tests folder from the "app-plugin-<Plugin Name>" and run the script "test"
+To test the plugin go to the tests folder from the "app-plugin-squid" and run the script "test"
 ```shell
-cd app-plugin-<Plugin Name>/tests       # go to the tests folder in app-plugin-<Plugin Name>
+cd app-plugin-squid/tests       # go to the tests folder in app-plugin-squid
 yarn test                       # run the script test
 ```
 ## Continuous Integration

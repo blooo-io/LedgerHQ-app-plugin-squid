@@ -1,4 +1,4 @@
-#include "<Plugin Name>_plugin.h"
+#include "squid_plugin.h"
 
 // Need more information about the interface for plugins? Please read the README.md!
 
@@ -6,11 +6,11 @@
 // link:  <Plugin Contract Link>
 //
 //
-static const uint8_t <Plugin Function Name>_GENERIC_SELECTOR[SELECTOR_SIZE] = {0x00, 0x00, 0x00, 0x00};
+static const uint8_t CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x8c, 0xa3, 0xbf, 0x68};
 
 // Array of all the different LI.FI selectors.
-const uint8_t *const  PLUGIN_SELECTORS[NUM_PLUGIN_SELECTORS] = {
-    <Plugin Function Name>_GENERIC_SELECTOR,
+const uint8_t *const  SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {
+    CALL_BRIDGE_CALL_SELECTOR,
 };
 
 // Ask dummy address ETH
