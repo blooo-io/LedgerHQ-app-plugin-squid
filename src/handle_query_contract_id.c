@@ -2,13 +2,13 @@
 
 void handle_query_contract_id(void *parameters) {
     ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
-    plugin_parameters_t *context = (plugin_parameters_t *) msg->pluginContext;
+    squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
 
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
-            strlcpy(msg->version, "Function Generic", msg->versionLength);
+            strlcpy(msg->version, "Call Bridge Call", msg->versionLength);
             break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);

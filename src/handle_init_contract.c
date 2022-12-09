@@ -9,12 +9,12 @@ void handle_init_contract(void *parameters) {
         return;
     }
 
-    if (msg->pluginContextLength < sizeof(plugin_parameters_t)) {
+    if (msg->pluginContextLength < sizeof(squid_parameters_t)) {
         msg->result = ETH_PLUGIN_RESULT_ERROR;
         return;
     }
 
-    plugin_parameters_t *context = (plugin_parameters_t *) msg->pluginContext;
+    squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
     context->valid = 1;
 
@@ -35,8 +35,8 @@ void handle_init_contract(void *parameters) {
 
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
-        case CALL_BRIDGE_CALL_SELECTOR:
-            context->next_param = AMOUNT_SENT;
+        case CALL_BRIDGE_CALL:
+            context->next_param = TOKEN_SENT;
             break;
         default:
             PRINTF("Missing selectorIndex\n");
