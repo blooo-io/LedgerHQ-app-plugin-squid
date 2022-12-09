@@ -1,14 +1,5 @@
 #include "squid_plugin.h"
 
-static bool is_chain_supported(squid_parameters_t *context) {
-    for (size_t i = 0; i < NUM_SUPPORTED_CHAINS; i++) {
-        if (context->dest_chain == SQUID_SUPPORTED_CHAINS[i]) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 // Set UI for the "Send" screen.
 static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
     switch (context->selectorIndex) {
@@ -84,16 +75,29 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                 return SEND_SCREEN;
             }
         case 2:
-            if (token_sent_found) {
+            if (token_sent_found && chain_supported) {
                 return DEST_CHAIN_SCREEN;
-            } else {
+            } else if (token_sent_found && !chain_supported) {
+                return WARN_CHAIN_SCREEN;
+            } else if (!token_sent_found) {
                 return TO_ASSET_SCREEN;
             }
+
         case 3:
-            if (token_sent_found) {
+            if (token_sent_found && chain_supported) {
                 return ERROR;
-            } else {
+            } else if (!token_sent_found && chain_supported) {
                 return DEST_CHAIN_SCREEN;
+            } else if (token_sent_found && !chain_supported) {
+                return DEST_CHAIN_SCREEN;
+            } else if (!token_sent_found && !chain_supported) {
+                return WARN_CHAIN_SCREEN;
+            }
+        case 4:
+            if (!token_sent_found && !chain_supported) {
+                return DEST_CHAIN_SCREEN;
+            } else {
+                return ERROR;
             }
         default:
             return ERROR;

@@ -104,3 +104,12 @@ static inline void printf_hex_array(const char *title __attribute__((unused)),
     };
     PRINTF("\n");
 }
+
+static inline bool is_chain_supported(squid_parameters_t *context) {
+    for (size_t i = 0; i < NUM_SUPPORTED_CHAINS; i++) {
+        if (!memcmp(context->dest_chain, SQUID_SUPPORTED_CHAINS[i], PARAMETER_LENGTH)) {
+            return 1;
+        }
+    }
+    return 0;
+}

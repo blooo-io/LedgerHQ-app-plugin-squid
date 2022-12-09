@@ -10,15 +10,6 @@ static void received_network_token(squid_parameters_t *context) {
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 
-static bool is_chain_supported(squid_parameters_t *context) {
-    for (size_t i = 0; i < NUM_SUPPORTED_CHAINS; i++) {
-        if (context->dest_chain == SQUID_SUPPORTED_CHAINS[i]) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;

@@ -8,7 +8,7 @@
 //
 static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x8c, 0xa3, 0xbf, 0x68};
 
-// Array of all the different LI.FI selectors.
+// Array of all the different Squid selectors.
 const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {
     SQUID_CALL_BRIDGE_CALL_SELECTOR,
 };
