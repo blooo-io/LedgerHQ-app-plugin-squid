@@ -10,6 +10,9 @@ void handle_query_contract_id(void *parameters) {
         case CALL_BRIDGE_CALL:
             strlcpy(msg->version, "Call Bridge Call", msg->versionLength);
             break;
+        case BRIDGE_CALL:
+            strlcpy(msg->version, "Bridge Call", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

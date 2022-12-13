@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_SQUID_SELECTORS 1
+#define NUM_SQUID_SELECTORS 2
 #define SELECTOR_SIZE       4
 
 #define PLUGIN_NAME "Squid"
@@ -18,16 +18,24 @@
 #define TOKEN_RECEIVED_FOUND 1 << 1  // REMOVE IF NOT NEEDED
 
 #define NUM_SUPPORTED_CHAINS 3
+#define NUM_SUPPORTED_TOKENS 22
+
+typedef struct tokenSymbolToDecimals_t {
+    char token_symbol[MAX_TICKER_LEN];
+    uint8_t decimals_sent;
+} tokenSymbolToDecimals_t;
 
 extern const uint8_t PLUGIN_ETH_ADDRESS[ADDRESS_LENGTH];  // REMOVE IF NOT NEEDED
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];    // REMOVE IF NOT NEEDED
+
 extern const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH];
+extern const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS];
 // Returns 1 if corresponding address is the address for the chain token (ETH, BNB, MATIC,
 #define ADDRESS_IS_NETWORK_TOKEN(_addr)                    \
     (!memcmp(_addr, PLUGIN_ETH_ADDRESS, ADDRESS_LENGTH) || \
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
-typedef enum { CALL_BRIDGE_CALL } pluginSelector_t;
+typedef enum { CALL_BRIDGE_CALL, BRIDGE_CALL } pluginSelector_t;
 
 extern const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS];
 
@@ -69,7 +77,8 @@ typedef struct squid_parameters_t {
     char ticker_received[MAX_TICKER_LEN];
 
     uint16_t offset;
-    uint16_t saved_offset;
+    uint16_t saved_offset_1;
+    uint16_t saved_offset_2;
     uint16_t checkpoint;
     uint8_t next_param;
     uint8_t tokens_found;
@@ -81,8 +90,8 @@ typedef struct squid_parameters_t {
     uint8_t skip;
 } squid_parameters_t;  // Remove any variable not used
 // 32*2 + 2*20 + 12*3 = 140
-// 2*3 + 1*8 = 14
-// 12+128 = 154
+// 2*4 + 1*8 = 16
+// 16+140 = 156
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32.
 // Do not remove this check.

@@ -5,26 +5,34 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
             strlcpy(msg->title, "Send", msg->titleLength);
+            // set network ticker (ETH, BNB, etc) if needed
+            if (ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
+                strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
+            }
+            // Convert to string.
+            amountToString(context->amount_sent,
+                           INT256_LENGTH,
+                           context->decimals_sent,
+                           context->ticker_sent,
+                           msg->msg,
+                           msg->msgLength);
+            PRINTF("AMOUNT SENT: %s\n", msg->msg);
+            break;
+        case BRIDGE_CALL:
+            strlcpy(msg->title, "Send", msg->titleLength);
+            amountToString(context->amount_sent,
+                           INT256_LENGTH,
+                           context->decimals_sent,
+                           context->token_symbol,
+                           msg->msg,
+                           msg->msgLength);
+            PRINTF("AMOUNT SENT: %s\n", msg->msg);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-
-    // set network ticker (ETH, BNB, etc) if needed
-    if (ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
-        strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
-    }
-
-    // Convert to string.
-    amountToString(context->amount_sent,
-                   INT256_LENGTH,
-                   context->decimals_sent,
-                   context->ticker_sent,
-                   msg->msg,
-                   msg->msgLength);
-    PRINTF("AMOUNT SENT: %s\n", msg->msg);
 }
 
 // Set UI for "To Asset" screen.
@@ -60,46 +68,75 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
     bool chain_supported = is_chain_supported(context);
+    switch (context->selectorIndex) {
+        case CALL_BRIDGE_CALL:
+            switch (index) {
+                case 0:
+                    if (token_sent_found) {
+                        return SEND_SCREEN;
+                    } else {
+                        return WARN_TOKEN_SCREEN;
+                    }
+                case 1:
+                    if (token_sent_found) {
+                        return TO_ASSET_SCREEN;
+                    } else {
+                        return SEND_SCREEN;
+                    }
+                case 2:
+                    if (token_sent_found && chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (token_sent_found && !chain_supported) {
+                        return WARN_CHAIN_SCREEN;
+                    } else if (!token_sent_found) {
+                        return TO_ASSET_SCREEN;
+                    }
 
-    switch (index) {
-        case 0:
-            if (token_sent_found) {
-                return SEND_SCREEN;
-            } else {
-                return WARN_TOKEN_SCREEN;
+                case 3:
+                    if (token_sent_found && chain_supported) {
+                        return ERROR;
+                    } else if (!token_sent_found && chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (token_sent_found && !chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (!token_sent_found && !chain_supported) {
+                        return WARN_CHAIN_SCREEN;
+                    }
+                case 4:
+                    if (!token_sent_found && !chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else {
+                        return ERROR;
+                    }
+                default:
+                    return ERROR;
             }
-        case 1:
-            if (token_sent_found) {
-                return TO_ASSET_SCREEN;
-            } else {
-                return SEND_SCREEN;
+            break;
+        case BRIDGE_CALL:
+            switch (index) {
+                case 0:
+                    return SEND_SCREEN;
+                case 1:
+                    return TO_ASSET_SCREEN;
+                case 2:
+                    if (chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else {
+                        return WARN_CHAIN_SCREEN;
+                    }
+                case 3:
+                    if (chain_supported) {
+                        return ERROR;
+                    } else {
+                        return DEST_CHAIN_SCREEN;
+                    }
+                default:
+                    return ERROR;
             }
-        case 2:
-            if (token_sent_found && chain_supported) {
-                return DEST_CHAIN_SCREEN;
-            } else if (token_sent_found && !chain_supported) {
-                return WARN_CHAIN_SCREEN;
-            } else if (!token_sent_found) {
-                return TO_ASSET_SCREEN;
-            }
-
-        case 3:
-            if (token_sent_found && chain_supported) {
-                return ERROR;
-            } else if (!token_sent_found && chain_supported) {
-                return DEST_CHAIN_SCREEN;
-            } else if (token_sent_found && !chain_supported) {
-                return DEST_CHAIN_SCREEN;
-            } else if (!token_sent_found && !chain_supported) {
-                return WARN_CHAIN_SCREEN;
-            }
-        case 4:
-            if (!token_sent_found && !chain_supported) {
-                return DEST_CHAIN_SCREEN;
-            } else {
-                return ERROR;
-            }
+            break;
         default:
+            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
             return ERROR;
     }
     return ERROR;
