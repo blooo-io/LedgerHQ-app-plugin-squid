@@ -2,8 +2,8 @@ import { processTest, populateTransaction } from "../test.fixture";
 
 const contractName = "SquidRouterProxy";
 
-const testLabel = "ethereum_bridgeCall_chain_warning";
-const testDirSuffix = "bridgeCall_chain_warning";
+const testLabel = "ethereum_bridgeCall_normal_flow";
+const testDirSuffix = "bridgeCall_normal_flow";
 const testNetwork = "ethereum";
 const signedPlugin = false;
 
@@ -20,18 +20,18 @@ const devices = [
     {
         name: "nanos",
         label: "Nano S",
-        steps: 6, // <= Define the number of steps for this test case and this device
+        steps: 5, // <= Define the number of steps for this test case and this device
     },
-    // {
-    //     name: "nanox",
-    //     label: "Nano X",
-    //     steps: 6, // <= Define the number of steps for this test case and this device
-    // },
-    // {
-    //     name: "nanosp",
-    //     label: "Nano S+",
-    //     steps: 6, // <= Define the number of steps for this test case and this device
-    // }
+    {
+        name: "nanox",
+        label: "Nano X",
+        steps: 5, // <= Define the number of steps for this test case and this device
+    },
+    {
+        name: "nanosp",
+        label: "Nano S+",
+        steps: 5, // <= Define the number of steps for this test case and this device
+    }
 ];
 
 devices.forEach((device) =>
