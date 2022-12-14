@@ -11,6 +11,11 @@
                     ],
                     "method": "callBridgeCall",
                     "plugin": "squid"
+                },
+                "0x3c659741": {
+                    "erc20OfInterest": [],
+                    "method": "bridgeCall",
+                    "plugin": "squid"
                 }
             }
         }
