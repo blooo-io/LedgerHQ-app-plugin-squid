@@ -10,11 +10,15 @@ static void received_network_token(squid_parameters_t *context) {
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 
-static bool mapped_sent_token(squid_parameters_t *context) {
+static bool set_ticker_for_mapped_token(squid_parameters_t *context) {
     for (size_t i = 0; i < NUM_SUPPORTED_TOKENS; i++) {
         if (!memcmp(context->token_symbol,
                     SQUID_SUPPORTED_TOKENS[i].token_symbol,
                     MAX_TICKER_LEN)) {
+            char ticker[MAX_TICKER_LEN];
+            strlcpy(ticker, (char *) SQUID_SUPPORTED_TOKENS[i].token_symbol, sizeof(ticker));
+            strcat(ticker, " ");
+            strlcpy(context->ticker_sent, (char *) ticker, sizeof(context->ticker_sent));
             context->decimals_sent = SQUID_SUPPORTED_TOKENS[i].decimals_sent;
             context->tokens_found |= TOKEN_SENT_FOUND;
             return 1;
@@ -27,12 +31,12 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
     if (context->valid) {
-        msg->numScreens = 3;
         switch (context->selectorIndex) {
             case CALL_BRIDGE_CALL:
+                msg->numScreens = 3;
                 if (!ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
-                    // Address is not network token (0x000...) so we will look up the token in the
-                    // CAL.
+                    // Address is not network token (0x000...) so we will look up the token in
+                    // the CAL.
                     printf_hex_array("Setting token sent to: ",
                                      ADDRESS_LENGTH,
                                      context->token_sent);
@@ -41,18 +45,20 @@ void handle_finalize(void *parameters) {
                     sent_network_token(context);
                     msg->tokenLookup1 = NULL;
                 }
-
-                if (!is_chain_supported(context)) {
-                    // Add a warning screen if the dest chain is not supported
-                    msg->numScreens += 1;
-                }
                 break;
             case BRIDGE_CALL:
+                msg->numScreens = 2;
+                msg->tokenLookup1 = NULL;
                 // check supported tokens custom mapping
                 // and set decimals for the specified token
-                if (!mapped_sent_token(context)) {
+                bool success = set_ticker_for_mapped_token(context);
+                if (!success) {
+                    // The token was not found in custom mapping
+                    context->decimals_sent = DEFAULT_DECIMAL;
+                    strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
+                    // // We will need an additional screen to display a warning message.
+                    msg->numScreens++;
                     PRINTF("Token not found in mapping\n");
-                    msg->result = ETH_PLUGIN_RESULT_ERROR;
                 }
                 break;
             default:
@@ -62,9 +68,14 @@ void handle_finalize(void *parameters) {
                 break;
         }
 
+        if (!is_chain_supported(context)) {
+            // Add a warning screen if the dest chain is not supported
+            msg->numScreens++;
+        }
+
         // if (!ADDRESS_IS_NETWORK_TOKEN(context->token_received)) {
-        //     // Address is not network token (0xeee...) so we will look up the token in the CAL.
-        //     printf_hex_array("Setting address received to: ",
+        //     // Address is not network token (0xeee...) so we will look up the token in the
+        //     CAL. printf_hex_array("Setting address received to: ",
         //                      ADDRESS_LENGTH,
         //                      context->token_received);
         //     msg->tokenLookup2 = context->token_received;

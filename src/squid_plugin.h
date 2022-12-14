@@ -18,7 +18,7 @@
 #define TOKEN_RECEIVED_FOUND 1 << 1  // REMOVE IF NOT NEEDED
 
 #define NUM_SUPPORTED_CHAINS 3
-#define NUM_SUPPORTED_TOKENS 22
+#define NUM_SUPPORTED_TOKENS 15
 
 typedef struct tokenSymbolToDecimals_t {
     char token_symbol[MAX_TICKER_LEN];

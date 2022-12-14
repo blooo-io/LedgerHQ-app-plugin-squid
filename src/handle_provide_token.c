@@ -35,6 +35,7 @@ void handle_provide_token(void *parameters) {
             break;
         // Skip this for bridgeCall
         case BRIDGE_CALL:
+            break;
         default:
             break;
     }

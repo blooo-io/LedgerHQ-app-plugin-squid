@@ -31,5 +31,20 @@ const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {"Et
                                                                              "Polygon",
                                                                              "BSC"};
 
-const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS] = {{"USDC", 6},
-                                                                                     {"Test", 7}};
+const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS] = {
+    {"ETH", 18},
+    {"WETH", 18},
+    {"DAI", 18},
+    {"USDT", 6},
+    {"USDC", 6},
+    {"WBTC", 8},
+    {"MATIC", 18},
+    {"BNB", 18},
+    {"BUSD", 18},
+    {"wAXL", 6},
+    {"axlUSDC", 6},
+    {"axlDAI", 18},
+    {"axlUSDT", 6},
+    {"WMATIC", 18},
+    {"WBNB", 18},
+};
