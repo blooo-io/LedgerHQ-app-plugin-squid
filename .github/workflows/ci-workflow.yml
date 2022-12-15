@@ -178,7 +178,7 @@ jobs:
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
-          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum ALLOW_DATA=1
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
@@ -232,7 +232,7 @@ jobs:
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
-          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
