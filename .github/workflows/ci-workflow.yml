@@ -256,8 +256,10 @@ jobs:
     needs:
       - job_build_debug_nano_s
       - job_build_debug_nano_x
+      - job_build_debug_nano_sp
       - job_build_ethereum_nano_s
       - job_build_ethereum_nano_x
+      - job_build_ethereum_nano_sp
     runs-on: ubuntu-latest
     steps:
       - name: Test
