@@ -47,7 +47,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build with Clang Static Analyzer
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -70,7 +69,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build with cov-build
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -101,7 +99,6 @@ jobs:
         with:
           submodules: recursive
       - name: Build plugin for Nano S
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -127,7 +124,6 @@ jobs:
         with:
           submodules: recursive
       - name: Build plugin for Nano S+
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -153,7 +149,6 @@ jobs:
         with:
           submodules: recursive
       - name: Build plugin for Nano X
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -181,7 +176,6 @@ jobs:
           ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
           submodules: recursive
       - name: Build ethereum
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -209,7 +203,6 @@ jobs:
           ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
           submodules: recursive
       - name: Build ethereum
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
@@ -237,7 +230,6 @@ jobs:
           ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
           submodules: recursive
       - name: Build ethereum
-        # Change the line below to the new safe directory
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
