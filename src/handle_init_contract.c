@@ -38,6 +38,9 @@ void handle_init_contract(void *parameters) {
         case CALL_BRIDGE_CALL:
             context->next_param = TOKEN_SENT;
             break;
+        case BRIDGE_CALL:
+            context->next_param = SAVE_CHAIN_OFFSET;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;

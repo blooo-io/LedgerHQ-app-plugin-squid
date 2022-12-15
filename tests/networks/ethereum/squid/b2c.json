@@ -6,8 +6,15 @@
             "contractName": "SquidRouterProxy",
             "selectors": {
                 "0x8ca3bf68": {
-                    "erc20OfInterest": ["token"],
+                    "erc20OfInterest": [
+                        "token"
+                    ],
                     "method": "callBridgeCall",
+                    "plugin": "squid"
+                },
+                "0x3c659741": {
+                    "erc20OfInterest": [],
+                    "method": "bridgeCall",
                     "plugin": "squid"
                 }
             }
