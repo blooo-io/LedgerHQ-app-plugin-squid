@@ -31,9 +31,11 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {"Ethereum",
-                                                                             "Polygon",
-                                                                             "BSC"};
+const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {
+    "Ethereum", "Polygon",   "Ethereum", "Arbitrum",    "Avalanche", "Moonbeam", "Polygon",
+    "binance",  "cosmoshub", "crescent", "injective",   "juno",      "kujira",   "osmosis",
+    "secret",   "terra-2",   "Agoric",   "ASSETMANTLE", "Axelarnet", "COMDEX",   "EVMOS",
+    "fetch",    "KI",        "REGEN",    "UMEE"};
 
 const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS] = {
     {"ETH", 18},
