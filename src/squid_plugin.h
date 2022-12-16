@@ -18,20 +18,18 @@
 #define NUM_SUPPORTED_CHAINS 25
 #define NUM_SUPPORTED_TOKENS 15
 
+extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
+
 typedef struct tokenSymbolToDecimals_t {
     char token_symbol[MAX_TICKER_LEN];
     uint8_t decimals_sent;
 } tokenSymbolToDecimals_t;
 
-extern const uint8_t PLUGIN_ETH_ADDRESS[ADDRESS_LENGTH];  // REMOVE IF NOT NEEDED
-extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];    // REMOVE IF NOT NEEDED
-
 extern const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH];
 extern const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS];
+
 // Returns 1 if corresponding address is the address for the chain token (ETH, BNB, MATIC,
-#define ADDRESS_IS_NETWORK_TOKEN(_addr)                    \
-    (!memcmp(_addr, PLUGIN_ETH_ADDRESS, ADDRESS_LENGTH) || \
-     !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
+#define ADDRESS_IS_NETWORK_TOKEN(_addr) (!memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
 typedef enum { CALL_BRIDGE_CALL, BRIDGE_CALL, CALL_BRIDGE } pluginSelector_t;
 
@@ -43,20 +41,18 @@ typedef enum {
     DEST_CHAIN_SCREEN,
     WARN_TOKEN_SCREEN,
     WARN_CHAIN_SCREEN,
-    ERROR,
+    ERROR_SCREEN,
 } screens_t;
 
 #define AMOUNT_SENT        0  // Amount sent by the user to the contract.
-#define AMOUNT_RECEIVED    1  // Amount sent by the contract to the user.
-#define TOKEN_SENT         2
-#define SAVE_SYMBOL_OFFSET 3
-#define SAVE_CHAIN_OFFSET  4
-#define SKIP               5
-#define ADDRESS_RECEIVER   6
-#define DEST_CHAIN         7
-#define SKIP_2             8
-#define TOKEN_SYMBOL       9
-#define NONE               10  // Placeholder variant to be set when parsing is done.
+#define TOKEN_SENT         1
+#define SAVE_SYMBOL_OFFSET 2
+#define SAVE_CHAIN_OFFSET  3
+#define SKIP               4
+#define DEST_CHAIN         5
+#define SKIP_2             6
+#define TOKEN_SYMBOL       7
+#define NONE               8  // Placeholder variant to be set when parsing is done.
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -69,10 +65,8 @@ typedef struct squid_parameters_t {
     uint8_t amount_sent[INT256_LENGTH];
     char dest_chain[PARAMETER_LENGTH];
     uint8_t token_sent[ADDRESS_LENGTH];
-    uint8_t token_received[ADDRESS_LENGTH];
     char token_symbol[MAX_TICKER_LEN];
     char ticker_sent[MAX_TICKER_LEN];
-    char ticker_received[MAX_TICKER_LEN];
 
     uint16_t offset;
     uint16_t saved_offset_1;
@@ -87,9 +81,9 @@ typedef struct squid_parameters_t {
     uint8_t flags;
     uint8_t skip;
 } squid_parameters_t;  // Remove any variable not used
-// 32*2 + 2*20 + 12*3 = 140
+// 32*2 + 1*20 + 12*2 = 108
 // 2*4 + 1*8 = 16
-// 16+140 = 156
+// 16+140 = 124
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32.
 // Do not remove this check.

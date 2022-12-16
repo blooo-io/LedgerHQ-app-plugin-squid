@@ -91,7 +91,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
                 case 3:
                     if (token_sent_found && chain_supported) {
-                        return ERROR;
+                        return ERROR_SCREEN;
                     } else if (!token_sent_found && chain_supported) {
                         return DEST_CHAIN_SCREEN;
                     } else if (token_sent_found && !chain_supported) {
@@ -103,10 +103,10 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     if (!token_sent_found && !chain_supported) {
                         return DEST_CHAIN_SCREEN;
                     } else {
-                        return ERROR;
+                        return ERROR_SCREEN;
                     }
                 default:
-                    return ERROR;
+                    return ERROR_SCREEN;
             }
             break;
         case BRIDGE_CALL:
@@ -127,7 +127,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     }
                 case 2:
                     if (token_sent_found && chain_supported) {
-                        return ERROR;
+                        return ERROR_SCREEN;
                     } else if (!token_sent_found && chain_supported) {
                         return DEST_CHAIN_SCREEN;
                     } else if (token_sent_found && !chain_supported) {
@@ -139,18 +139,18 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     if (!token_sent_found && !chain_supported) {
                         return DEST_CHAIN_SCREEN;
                     } else {
-                        return ERROR;
+                        return ERROR_SCREEN;
                     }
                 default:
-                    return ERROR;
+                    return ERROR_SCREEN;
             }
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return ERROR;
+            return ERROR_SCREEN;
     }
-    return ERROR;
+    return ERROR_SCREEN;
 }
 
 void handle_query_contract_ui(void *parameters) {

@@ -2,8 +2,8 @@
 
 // Need more information about the interface for plugins? Please read the README.md!
 
-// You can check <Plugin Contract Name> methods here
-// link:  <Plugin Contract Link>
+// You can check SquidRouterProxy's methods here :
+// https://etherscan.io/address/0xce16f69375520ab01377ce7b88f5ba8c48f8d666#code
 //
 
 // callBridgeCall : 0x8ca3bf68
@@ -20,23 +20,19 @@ const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {SQUID_CALL_BRIDGE_C
                                                              SQUID_BRIDGE_CALL_SELECTOR,
                                                              SQUID_CALL_BRIDGE_SELECTOR};
 
-// Ask dummy address ETH
-// Remove if not used
-const uint8_t PLUGIN_ETH_ADDRESS[ADDRESS_LENGTH] = {0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
-                                                    0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
-                                                    0xee, 0xee, 0xee, 0xee, 0xee, 0xee};
-
-// Remove if not used
 const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+// Array containing the chains supported by squid
 const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {
     "Ethereum", "Polygon",   "Ethereum", "Arbitrum",    "Avalanche", "Moonbeam", "Polygon",
     "binance",  "cosmoshub", "crescent", "injective",   "juno",      "kujira",   "osmosis",
     "secret",   "terra-2",   "Agoric",   "ASSETMANTLE", "Axelarnet", "COMDEX",   "EVMOS",
     "fetch",    "KI",        "REGEN",    "UMEE"};
 
+// Array containing the 15 most used tokens supported by squid
+// each represented with their symbol and decimals
 const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS] = {
     {"ETH", 18},
     {"WETH", 18},

@@ -1,5 +1,6 @@
 # Badges
-<Plugin Github Action Badger>
+[![Code style check](https://github.com/blooo-io/LedgerHQ-app-plugin-squid/actions/workflows/lint-workflow.yml/badge.svg?branch=main)](https://github.com/blooo-io/LedgerHQ-app-plugin-squid/actions/workflows/lint-workflow.yml)
+[![Compilation & tests](https://github.com/blooo-io/LedgerHQ-app-plugin-squid/actions/workflows/ci-workflow.yml/badge.svg?branch=main)](https://github.com/blooo-io/LedgerHQ-app-plugin-squid/actions/workflows/ci-workflow.yml)
 
 # Ledger squid Plugin
 
@@ -7,10 +8,10 @@ This is a plugin for the Ethereum application which helps parsing and displaying
 
 ## Prerequisite
 
-Clone the plugin to a new folder.
+Clone the plugin in a new folder.
 
 ```shell
-git clone <Plugin Repo>
+git clone https://github.com/blooo-io/LedgerHQ-app-plugin-squid.git
 ```
 
 Then in the same folder clone two more repositories, which is the plugin-tools and app-ethereum.
@@ -25,11 +26,22 @@ Need more information about the interface, the architecture, or general stuff ab
 
 ## Smart Contracts
 
-Smart contracts covered by this plugin are:
+The smart contracts covered by this plugin are:
 
-| Network | Version | Smart Contract |
-| ---       | --- | --- |
-| Ethereum  | V3  | `0x00000000000000000000000000`|
+| Network   | Smart Contract |
+| ---       | ---            |
+| Ethereum  | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+| Polygon   | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+| BSC       | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+
+
+On these smart contracts, the functions covered by this plugin are:
+
+|    Function   | Selector  | Displayed Parameters |
+| ---           | ---       | --- |
+|callBridgeCall | 0x8ca3bf68| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
+|bridgeCall     | 0x3c659741| <table>  <tbody>  <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table>|
+|callBridge     | 0xf35af1f8| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
 
 
 ## Build
@@ -43,7 +55,7 @@ The script will build a docker image and attach a console.
 When the docker image is running go to the "app-plugin-squid" folder and build the ".elf" files.
 ```shell
 cd app-plugin-squid/tests       # go to the tests folder in app-plugin-squid
-./build_local_test_elfs.sh              # run the script build_local_test_elfs.sh
+./build_local_test_elfs.sh      # run the script build_local_test_elfs.sh
 ```
 
 ## Tests
@@ -59,4 +71,5 @@ yarn test                       # run the script test
 The flow processed in [GitHub Actions](https://github.com/features/actions) is the following:
 
 - Code formatting with [clang-format](http://clang.llvm.org/docs/ClangFormat.html)
-- Compilation of the application for Ledger Nano S in [ledger-app-builder](https://github.com/LedgerHQ/ledger-app-builder)
+- Compilation of the application for Ledger Nano S, Nano S+ and Nano X in [ledger-app-builder](https://github.com/LedgerHQ/ledger-app-builder)
+- Execute the provided end to end tests
