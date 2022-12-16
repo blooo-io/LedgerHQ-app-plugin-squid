@@ -16,6 +16,13 @@
                     "erc20OfInterest": [],
                     "method": "bridgeCall",
                     "plugin": "squid"
+                },
+                "0xf35af1f8": {
+                    "erc20OfInterest": [
+                        "token"
+                    ],
+                    "method": "callBridge",
+                    "plugin": "squid"
                 }
             }
         }
