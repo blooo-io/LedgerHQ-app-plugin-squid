@@ -36,6 +36,7 @@ void handle_init_contract(void *parameters) {
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
+        case CALL_BRIDGE:
             context->next_param = TOKEN_SENT;
             break;
         case BRIDGE_CALL:

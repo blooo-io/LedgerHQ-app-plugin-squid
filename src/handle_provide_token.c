@@ -12,6 +12,7 @@ void handle_provide_token(void *parameters) {
 
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
+        case CALL_BRIDGE:
             if (ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
                 sent_network_token(context);
             } else if (msg->item1 != NULL) {

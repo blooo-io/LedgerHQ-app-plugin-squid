@@ -28,6 +28,7 @@ void handle_finalize(void *parameters) {
     if (context->valid) {
         switch (context->selectorIndex) {
             case CALL_BRIDGE_CALL:
+            case CALL_BRIDGE:
                 msg->numScreens = 3;
                 if (!ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
                     // Address is not network token (0x000...) so we will look up the token in

@@ -5,6 +5,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
     strlcpy(msg->title, "Send", msg->titleLength);
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
+        case CALL_BRIDGE:
             // set network ticker (ETH, BNB, etc) if needed
             if (ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
                 strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
@@ -59,8 +60,13 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
     bool chain_supported = is_chain_supported(context);
+
+    PRINTF("token_sent_found: %d\n", token_sent_found);
+    PRINTF("chain_supported: %d\n", chain_supported);
+
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
+        case CALL_BRIDGE:
             switch (index) {
                 case 0:
                     if (token_sent_found) {
