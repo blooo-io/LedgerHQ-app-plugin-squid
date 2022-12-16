@@ -12,9 +12,13 @@ static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x8c, 0xa
 // bridgeCall : 0x3c659741
 static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x3c, 0x65, 0x97, 0x41};
 
+// callBridge : 0xf35af1f8
+static const uint8_t SQUID_CALL_BRIDGE_SELECTOR[SELECTOR_SIZE] = {0xf3, 0x5a, 0xf1, 0xf8};
+
 // Array of all the different Squid selectors.
 const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {SQUID_CALL_BRIDGE_CALL_SELECTOR,
-                                                             SQUID_BRIDGE_CALL_SELECTOR};
+                                                             SQUID_BRIDGE_CALL_SELECTOR,
+                                                             SQUID_CALL_BRIDGE_SELECTOR};
 
 // Ask dummy address ETH
 // Remove if not used

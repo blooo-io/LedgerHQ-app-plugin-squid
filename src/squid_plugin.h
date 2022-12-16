@@ -9,13 +9,11 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_SQUID_SELECTORS 2
-#define SELECTOR_SIZE       4
+#define NUM_SQUID_SELECTORS 3
 
 #define PLUGIN_NAME "Squid"
 
-#define TOKEN_SENT_FOUND     1       // REMOVE IF NOT NEEDED
-#define TOKEN_RECEIVED_FOUND 1 << 1  // REMOVE IF NOT NEEDED
+#define TOKEN_SENT_FOUND 1
 
 #define NUM_SUPPORTED_CHAINS 3
 #define NUM_SUPPORTED_TOKENS 15
@@ -35,7 +33,7 @@ extern const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED
     (!memcmp(_addr, PLUGIN_ETH_ADDRESS, ADDRESS_LENGTH) || \
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
-typedef enum { CALL_BRIDGE_CALL, BRIDGE_CALL } pluginSelector_t;
+typedef enum { CALL_BRIDGE_CALL, BRIDGE_CALL, CALL_BRIDGE } pluginSelector_t;
 
 extern const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS];
 

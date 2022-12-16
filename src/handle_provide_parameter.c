@@ -42,7 +42,7 @@ static void handle_call_bridge_call(ethPluginProvideParameter_t *msg, squid_para
             // Save token symbol offset
             context->saved_offset_1 =
                 U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
-            PRINTF("offset = %i\n", context->offset);
+            PRINTF("offset = %d\n", context->offset);
             context->next_param = SKIP;
             break;
         case SKIP:
@@ -130,6 +130,67 @@ static void handle_bridge_call(ethPluginProvideParameter_t *msg, squid_parameter
     }
 }
 
+static void handle_call_bridge(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
+    switch (context->next_param) {
+        case TOKEN_SENT:
+            handle_token_sent(msg, context);
+            printf_hex_array("Token sent: 0x", ADDRESS_LENGTH, context->token_sent);
+            context->next_param = AMOUNT_SENT;
+            break;
+        case AMOUNT_SENT:
+            handle_amount_sent(msg, context);
+            printf_hex_array("Amount sent:", INT256_LENGTH, context->amount_sent);
+            context->next_param = SAVE_CHAIN_OFFSET;
+            break;
+        case SAVE_CHAIN_OFFSET:
+            context->saved_offset_1 =
+                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->saved_offset_1));
+            // Skip destAddress offset
+            PRINTF("SAVE_CHAIN_OFFSET\n");
+            context->skip += 1;
+            context->next_param = SAVE_SYMBOL_OFFSET;
+            break;
+        case SAVE_SYMBOL_OFFSET:
+            // Go to dest chain offset next
+            context->offset = context->saved_offset_1;
+            // Save token symbol offset
+            context->saved_offset_1 =
+                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
+            PRINTF("SAVE_SYMBOL_OFFSET\n");
+            context->next_param = SKIP;
+            break;
+        case SKIP:
+            // Skip num of characters declaration for dest chain string
+            // Already skipped 1 by going in this case
+            context->skip += 0;
+            context->next_param = DEST_CHAIN;
+            break;
+        case DEST_CHAIN:
+            handle_dest_chain(msg, context);
+            PRINTF("dest chain: %s\n", context->dest_chain);
+            context->offset = context->saved_offset_1;
+            context->next_param = SKIP_2;
+            break;
+        case SKIP_2:
+            // Skip num of characters declaration for token symbol string
+            // Already skipped 1 by going in this case
+            context->skip += 0;
+            context->next_param = TOKEN_SYMBOL;
+            break;
+        case TOKEN_SYMBOL:
+            handle_token_symbol(msg, context);
+            PRINTF("token symbol: %s\n", context->token_symbol);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
@@ -157,6 +218,9 @@ void handle_provide_parameter(void *parameters) {
                 break;
             case BRIDGE_CALL:
                 handle_bridge_call(msg, context);
+                break;
+            case CALL_BRIDGE:
+                handle_call_bridge(msg, context);
                 break;
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
