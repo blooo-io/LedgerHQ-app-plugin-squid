@@ -5,6 +5,7 @@ static void sent_network_token(squid_parameters_t *context) {
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
+// Sets the ticker as the token symbol previously stored concatenated to a space
 static bool set_ticker_for_mapped_token(squid_parameters_t *context) {
     for (size_t i = 0; i < NUM_SUPPORTED_TOKENS; i++) {
         if (!memcmp(context->token_symbol,

@@ -6,15 +6,18 @@ static void handle_amount_sent(ethPluginProvideParameter_t *msg, squid_parameter
     memcpy(context->amount_sent, msg->parameter, INT256_LENGTH);
 }
 
+// Stores the address of the token sent
 static void handle_token_sent(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     memset(context->token_sent, 0, sizeof(context->token_sent));
     memcpy(context->token_sent, msg->parameter, ADDRESS_LENGTH);
 }
 
+// Stores the destination chain as a string
 static void handle_dest_chain(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     memcpy(context->dest_chain, msg->parameter, PARAMETER_LENGTH);
 }
 
+// Stores the token symbol of the asset we are bridging to as a string
 static void handle_token_symbol(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     memcpy(context->token_symbol, msg->parameter, MAX_TICKER_LEN);
 }
