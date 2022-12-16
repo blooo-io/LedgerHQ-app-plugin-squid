@@ -15,7 +15,7 @@
 
 #define TOKEN_SENT_FOUND 1
 
-#define NUM_SUPPORTED_CHAINS 3
+#define NUM_SUPPORTED_CHAINS 25
 #define NUM_SUPPORTED_TOKENS 15
 
 typedef struct tokenSymbolToDecimals_t {
