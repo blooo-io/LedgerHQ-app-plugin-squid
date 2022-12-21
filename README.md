@@ -52,18 +52,18 @@ cd plugin-tools  # go to plugin folder
 ./start.sh       # run the script start.sh
 ```
 The script will build a docker image and attach a console.
-When the docker image is running go to the "app-plugin-squid" folder and build the ".elf" files.
+When the docker image is running go to the "LedgerHQ-app-plugin-squid" folder and build the ".elf" files.
 ```shell
-cd app-plugin-squid/tests       # go to the tests folder in app-plugin-squid
-./build_local_test_elfs.sh      # run the script build_local_test_elfs.sh
+cd LedgerHQ-app-plugin-squid/tests    # go to the tests folder in app-plugin-squid
+./build_local_test_elfs.sh            # run the script build_local_test_elfs.sh
 ```
 
 ## Tests
 
 To test the plugin go to the tests folder from the "app-plugin-squid" and run the script "test"
 ```shell
-cd app-plugin-squid/tests       # go to the tests folder in app-plugin-squid
-yarn test                       # run the script test
+cd LedgerHQ-app-plugin-squid/tests    # go to the tests folder in LedgerHQ-app-plugin-squid
+yarn test                             # run the script test
 ```
 ## Continuous Integration
 
@@ -72,4 +72,4 @@ The flow processed in [GitHub Actions](https://github.com/features/actions) is t
 
 - Code formatting with [clang-format](http://clang.llvm.org/docs/ClangFormat.html)
 - Compilation of the application for Ledger Nano S, Nano S+ and Nano X in [ledger-app-builder](https://github.com/LedgerHQ/ledger-app-builder)
-- Execute the provided end to end tests
+- Execution of the provided end to end tests

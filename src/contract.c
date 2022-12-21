@@ -26,10 +26,10 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
 
 // Array containing the chains supported by squid
 const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {
-    "Ethereum", "Polygon",   "Ethereum", "Arbitrum",    "Avalanche", "Moonbeam", "Polygon",
-    "binance",  "cosmoshub", "crescent", "injective",   "juno",      "kujira",   "osmosis",
-    "secret",   "terra-2",   "Agoric",   "ASSETMANTLE", "Axelarnet", "COMDEX",   "EVMOS",
-    "fetch",    "KI",        "REGEN",    "UMEE"};
+    "Ethereum",  "Polygon",  "Arbitrum",  "Avalanche",   "Moonbeam",  "binance",
+    "cosmoshub", "crescent", "injective", "juno",        "kujira",    "osmosis",
+    "secret",    "terra-2",  "Agoric",    "ASSETMANTLE", "Axelarnet", "COMDEX",
+    "EVMOS",     "fetch",    "KI",        "REGEN",       "UMEE"};
 
 // Array containing the 15 most used tokens supported by squid
 // each represented with their symbol and decimals

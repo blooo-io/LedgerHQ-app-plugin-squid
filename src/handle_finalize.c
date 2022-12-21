@@ -23,25 +23,30 @@ static bool set_ticker_for_mapped_token(squid_parameters_t *context) {
     return 0;
 }
 
+static void finalize_lookup(ethPluginFinalize_t *msg, squid_parameters_t *context) {
+    if (!ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
+        // Address is not network token (0x000...) so we will look up the token in
+        // the CAL.
+        printf_hex_array("Setting token sent to: ", ADDRESS_LENGTH, context->token_sent);
+        msg->tokenLookup1 = context->token_sent;
+    } else {
+        sent_network_token(context);
+        msg->tokenLookup1 = NULL;
+    }
+}
+
 void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
     if (context->valid) {
         switch (context->selectorIndex) {
             case CALL_BRIDGE_CALL:
+                msg->numScreens = 2;
+                finalize_lookup(msg, context);
+                break;
             case CALL_BRIDGE:
                 msg->numScreens = 3;
-                if (!ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
-                    // Address is not network token (0x000...) so we will look up the token in
-                    // the CAL.
-                    printf_hex_array("Setting token sent to: ",
-                                     ADDRESS_LENGTH,
-                                     context->token_sent);
-                    msg->tokenLookup1 = context->token_sent;
-                } else {
-                    sent_network_token(context);
-                    msg->tokenLookup1 = NULL;
-                }
+                finalize_lookup(msg, context);
                 break;
             case BRIDGE_CALL:
                 msg->numScreens = 2;
@@ -61,7 +66,6 @@ void handle_finalize(void *parameters) {
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
-                break;
                 break;
         }
 
