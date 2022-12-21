@@ -65,7 +65,6 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
     PRINTF("chain_supported: %d\n", chain_supported);
 
     switch (context->selectorIndex) {
-        case CALL_BRIDGE_CALL:
         case CALL_BRIDGE:
             switch (index) {
                 case 0:
@@ -109,6 +108,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     return ERROR_SCREEN;
             }
             break;
+        case CALL_BRIDGE_CALL:
         case BRIDGE_CALL:
             switch (index) {
                 case 0:
