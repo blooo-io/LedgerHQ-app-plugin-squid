@@ -25,13 +25,33 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 // Array containing the chains supported by squid
-const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH] = {
-    "Ethereum",  "Polygon",  "Arbitrum",  "Avalanche",   "Moonbeam",  "binance",
-    "cosmoshub", "crescent", "injective", "juno",        "kujira",    "osmosis",
-    "secret",    "terra-2",  "Agoric",    "ASSETMANTLE", "Axelarnet", "COMDEX",
-    "EVMOS",     "fetch",    "KI",        "REGEN",       "UMEE"};
+const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] = {
+    {"Ethereum", "Ethereum"},
+    {"Arbitrum", "Arbitrum"},
+    {"Avalanche", "Avalanche C-Chain"},
+    {"Moonbeam", "Moonbeam Mainnet"},
+    {"Polygon", "Polygon"},
+    {"binance", "Binance"},
+    {"cosmoshub", "Cosmos Hub"},
+    {"crescent", "Crescent"},
+    {"injective", "Injective"},
+    {"juno", "Juno"},
+    {"kujira", "Kujira"},
+    {"osmosis", "Osmosis"},
+    {"secret", "Secret Network"},
+    {"terra-2", "Terra-2"},
+    {"Agoric", "Agoric"},
+    {"ASSETMANTLE", "AssetMantle"},
+    {"Axelarnet", "Axelar"},
+    {"COMDEX", "Comdex"},
+    {"EVMOS", "Evmos"},
+    {"fetch", "Fetch"},
+    {"KI", "Ki"},
+    {"REGEN", "Regen"},
+    {"UMEE", "Umee"},
+};
 
-// Array containing the 15 most used tokens supported by squid
+// Array containing the most used tokens supported by squid
 // each represented with their symbol and decimals
 const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS] = {
     {"ETH", 18},
@@ -49,4 +69,7 @@ const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS
     {"axlUSDT", 6},
     {"WMATIC", 18},
     {"WBNB", 18},
+    {"WGLMR", 18},
+    {"WFTM", 18},
+    {"WAVAX", 18},
 };
