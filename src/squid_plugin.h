@@ -16,7 +16,7 @@
 #define TOKEN_SENT_FOUND 1
 
 #define NUM_SUPPORTED_CHAINS 23
-#define NUM_SUPPORTED_TOKENS 15
+#define NUM_SUPPORTED_TOKENS 18
 
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
@@ -25,7 +25,17 @@ typedef struct tokenSymbolToDecimals_t {
     uint8_t decimals_sent;
 } tokenSymbolToDecimals_t;
 
-extern const char SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS][PARAMETER_LENGTH];
+// Longest chain id is currently "ASSETMANTLE"
+#define MAX_CHAIN_ID_LEN 12
+// Longest chain name is currently "Avalanche C-Chain"
+#define MAX_CHAIN_NAME_LEN 18
+
+typedef struct chainIdToChainName_t {
+    char chain_id[MAX_CHAIN_ID_LEN];
+    char chain_name[MAX_CHAIN_NAME_LEN];
+} chainIdToChainName_t;
+
+extern const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS];
 extern const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS];
 
 // Returns 1 if corresponding address is the address for the chain token (ETH, BNB, MATIC,
@@ -108,7 +118,7 @@ static inline void printf_hex_array(const char *title __attribute__((unused)),
 
 static inline bool is_chain_supported(squid_parameters_t *context) {
     for (size_t i = 0; i < NUM_SUPPORTED_CHAINS; i++) {
-        if (!memcmp(context->dest_chain, SQUID_SUPPORTED_CHAINS[i], PARAMETER_LENGTH)) {
+        if (!memcmp(context->dest_chain, SQUID_SUPPORTED_CHAINS[i].chain_id, MAX_CHAIN_ID_LEN)) {
             return 1;
         }
     }

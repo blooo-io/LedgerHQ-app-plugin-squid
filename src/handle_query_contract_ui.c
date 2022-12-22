@@ -36,6 +36,12 @@ static void set_to_asset_ui(ethQueryContractUI_t *msg, squid_parameters_t *conte
 // Set UI for "Destination Chain" screen.
 static void set_dest_chain_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
     strlcpy(msg->title, "To Chain", msg->titleLength);
+    for (size_t i = 0; i < NUM_SUPPORTED_CHAINS; i++) {
+        if (!memcmp(context->dest_chain, SQUID_SUPPORTED_CHAINS[i].chain_id, MAX_CHAIN_ID_LEN)) {
+            strlcpy(msg->msg, SQUID_SUPPORTED_CHAINS[i].chain_name, msg->msgLength);
+            return;
+        }
+    }
     strlcpy(msg->msg, context->dest_chain, msg->msgLength);
 }
 
