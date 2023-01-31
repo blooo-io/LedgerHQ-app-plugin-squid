@@ -20,7 +20,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
             return;
     }
     amountToString(context->amount_sent,
-                   INT256_LENGTH,
+                   AMOUNT_LENGTH,
                    context->decimals_sent,
                    context->ticker_sent,
                    msg->msg,
@@ -30,8 +30,9 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
 
 // Set UI for "To Asset" screen.
 static void set_to_asset_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
+    PRINTF("To Asset: %s\n", context->token_symbol);
     strlcpy(msg->title, "To Asset", msg->titleLength);
-    strlcpy(msg->msg, context->ticker_sent, msg->msgLength);
+    strlcpy(msg->msg, context->token_symbol, msg->msgLength);
 }
 
 // Set UI for "Destination Chain" screen.

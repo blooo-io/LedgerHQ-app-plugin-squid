@@ -3,7 +3,7 @@
 // Store the amount sent in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
 static void handle_amount_sent(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
-    memcpy(context->amount_sent, msg->parameter, INT256_LENGTH);
+    memcpy(context->amount_sent, msg->parameter, AMOUNT_LENGTH);
 }
 
 // Stores the address of the token sent
@@ -19,7 +19,7 @@ static void handle_dest_chain(ethPluginProvideParameter_t *msg, squid_parameters
 
 // Stores the token symbol of the asset we are bridging to as a string
 static void handle_token_symbol(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
-    memcpy(context->ticker_sent, msg->parameter, MAX_TICKER_LEN);
+    memcpy(context->token_symbol, msg->parameter, MAX_TICKER_LEN);
 }
 
 // Stores the recipient address as a string
@@ -41,7 +41,7 @@ static void handle_call_bridge_call(ethPluginProvideParameter_t *msg, squid_para
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
-            printf_hex_array("Amount sent:", INT256_LENGTH, context->amount_sent);
+            printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
             context->next_param = SAVE_CHAIN_OFFSET;
             break;
         case SAVE_CHAIN_OFFSET:
@@ -86,7 +86,7 @@ static void handle_bridge_call(ethPluginProvideParameter_t *msg, squid_parameter
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
-            printf_hex_array("Amount sent:", INT256_LENGTH, context->amount_sent);
+            printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
             context->offset = context->saved_offset_1;
             context->next_param = SKIP;
             break;
@@ -108,7 +108,7 @@ static void handle_bridge_call(ethPluginProvideParameter_t *msg, squid_parameter
             break;
         case TOKEN_SYMBOL:
             handle_token_symbol(msg, context);
-            PRINTF("token symbol: %s\n", context->ticker_sent);
+            PRINTF("token symbol: %s\n", context->token_symbol);
             context->next_param = NONE;
             break;
         case NONE:
@@ -142,7 +142,7 @@ static void handle_send_token(ethPluginProvideParameter_t *msg, squid_parameters
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
-            printf_hex_array("Amount sent:", INT256_LENGTH, context->amount_sent);
+            printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
             context->offset = context->saved_offset_1;
             context->next_param = SKIP;
             break;
@@ -180,7 +180,7 @@ static void handle_send_token(ethPluginProvideParameter_t *msg, squid_parameters
             break;
         case TOKEN_SYMBOL:
             handle_token_symbol(msg, context);
-            PRINTF("token symbol: %s\n", context->ticker_sent);
+            PRINTF("token symbol: %s\n", context->token_symbol);
             context->next_param = NONE;
             break;
         case NONE:
@@ -201,7 +201,7 @@ static void handle_call_bridge(ethPluginProvideParameter_t *msg, squid_parameter
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
-            printf_hex_array("Amount sent:", INT256_LENGTH, context->amount_sent);
+            printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
             context->next_param = SAVE_CHAIN_OFFSET;
             break;
         case SAVE_CHAIN_OFFSET:
@@ -239,7 +239,7 @@ static void handle_call_bridge(ethPluginProvideParameter_t *msg, squid_parameter
             break;
         case TOKEN_SYMBOL:
             handle_token_symbol(msg, context);
-            PRINTF("token symbol: %s\n", context->ticker_sent);
+            PRINTF("token symbol: %s\n", context->token_symbol);
             context->next_param = NONE;
             break;
         case NONE:
@@ -263,6 +263,13 @@ void handle_provide_parameter(void *parameters) {
         // Skip this step, and don't forget to decrease skipping counter.
         context->skip--;
     } else {
+        if ((context->offset) &&
+            msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            PRINTF("offset: %d, parameterOffset: %d\n",
+                   context->offset,
+                   msg->parameterOffset);
+            return;
+        }
         context->offset = 0;
         switch (context->selectorIndex) {
             case CALL_BRIDGE_CALL:

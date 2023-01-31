@@ -7,8 +7,11 @@
 #define PARAMETER_LENGTH 32
 #define SELECTOR_SIZE    4
 
-#define RECIPIENT_ADDRESS_LENGTH     45
+#define RECIPIENT_ADDRESS_LENGTH     46
 #define RECIPIENT_SECOND_HALF_LENGTH 13
+
+#define AMOUNT_LENGTH     32
+#define DEST_CHAIN_LENGTH 26
 
 #define RUN_APPLICATION 1
 
@@ -18,7 +21,7 @@
 
 #define TOKEN_SENT_FOUND 1
 
-#define NUM_SUPPORTED_CHAINS 24
+#define NUM_SUPPORTED_CHAINS 25
 #define NUM_SUPPORTED_TOKENS 18
 
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
@@ -81,9 +84,10 @@ typedef enum {
 // Shared global memory with Ethereum app. Must be at most 5 * 32 bytes.
 typedef struct squid_parameters_t {
     char recipient[RECIPIENT_ADDRESS_LENGTH];
-    uint8_t amount_sent[INT256_LENGTH];
-    char dest_chain[PARAMETER_LENGTH];
+    char dest_chain[DEST_CHAIN_LENGTH];
+    uint8_t amount_sent[AMOUNT_LENGTH];
     uint8_t token_sent[ADDRESS_LENGTH];
+    char token_symbol[MAX_TICKER_LEN];
     char ticker_sent[MAX_TICKER_LEN];
 
     uint16_t offset;
@@ -96,9 +100,9 @@ typedef struct squid_parameters_t {
     uint8_t selectorIndex;
     uint8_t skip;
 } squid_parameters_t;  // Remove any variable not used
-// 32*2 + 1*20 + 12*1 + 1*45 = 141
+// 32*1 + 1*27 + 1*20 + 11*2 + 1*45 = 146
 // 2*4 + 1*5 = 13
-// 13+141 = 154
+// 13+146 = 159
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32.
 // Do not remove this check.

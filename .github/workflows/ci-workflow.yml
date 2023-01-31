@@ -70,6 +70,7 @@ jobs:
 
       - name: Build with cov-build
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           cov-build --dir cov-int make default
       - name: Submit the result to Coverity Scan
@@ -104,6 +105,7 @@ jobs:
           ref: develop
       - name: Build plugin for Nano S
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make BOLOS_SDK=$NANOS_SDK
       - name: Move binary to test directory
@@ -134,6 +136,7 @@ jobs:
           ref: develop
       - name: Build plugin for Nano X
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make BOLOS_SDK=$NANOX_SDK
       - name: Move binary to test directory
@@ -164,6 +167,7 @@ jobs:
           ref: develop
       - name: Build plugin for Nano S+
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make BOLOS_SDK=$NANOSP_SDK
       - name: Move binary to test directory
@@ -190,6 +194,7 @@ jobs:
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -216,6 +221,7 @@ jobs:
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -242,6 +248,7 @@ jobs:
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
