@@ -31,8 +31,11 @@ The smart contracts covered by this plugin are:
 | Network   | Smart Contract |
 | ---       | ---            |
 | Ethereum  | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+| Ethereum  | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
 | Polygon   | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+| Polygon   | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
 | BSC       | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
+| BSC       | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
 
 
 On these smart contracts, the functions covered by this plugin are:
@@ -42,7 +45,7 @@ On these smart contracts, the functions covered by this plugin are:
 |callBridgeCall | 0x8ca3bf68| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
 |bridgeCall     | 0x3c659741| <table>  <tbody>  <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table>|
 |callBridge     | 0xf35af1f8| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
-
+|sendToken     | 0x26ef699d| <table>  <tbody>  <tr> <td><code>string destinationChain</code></td></tr> <tr><td><code>string destinationAddress</code></td></tr> <tr><td><code>string symbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table> |
 
 ## Build
 
