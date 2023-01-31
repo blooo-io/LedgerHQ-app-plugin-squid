@@ -30,11 +30,11 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
 
 // Array containing the chains supported by squid
 const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] = {
-    {"Ethereum", "Ethereum"},
-    {"Arbitrum", "Arbitrum"},
-    {"Avalanche", "Avalanche C-Chain"},
-    {"Moonbeam", "Moonbeam Mainnet"},
-    {"Polygon", "Polygon"},
+    {"ethereum", "Ethereum"},
+    {"arbitrum", "Arbitrum"},
+    {"avalanche", "Avalanche C-Chain"},
+    {"moonbeam", "Moonbeam Mainnet"},
+    {"polygon", "Polygon"},
     {"binance", "Binance"},
     {"cosmoshub", "Cosmos Hub"},
     {"crescent", "Crescent"},

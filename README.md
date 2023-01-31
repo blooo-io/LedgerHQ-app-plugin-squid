@@ -33,9 +33,9 @@ The smart contracts covered by this plugin are:
 | Ethereum  | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
 | Ethereum  | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
 | Polygon   | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
-| Polygon   | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
+| Polygon   | `0x6f015f16de9fc8791b234ef68d486d2bf203fba8`|
 | BSC       | `0xce16F69375520ab01377ce7B88f5BA8C48F8D666`|
-| BSC       | `0x4f4495243837681061c4743b74b3eedf548d56a5`|
+| BSC       | `0x304acf330bbe08d1e512eefaa92f6a57871fd895`|
 
 
 On these smart contracts, the functions covered by this plugin are:
