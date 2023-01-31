@@ -8,7 +8,7 @@ static void sent_network_token(squid_parameters_t *context) {
 // Sets the ticker as the token symbol previously stored concatenated to a space
 static bool set_ticker_for_mapped_token(squid_parameters_t *context) {
     for (size_t i = 0; i < NUM_SUPPORTED_TOKENS; i++) {
-        if (!memcmp(context->token_symbol,
+        if (!memcmp(context->ticker_sent,
                     SQUID_SUPPORTED_TOKENS[i].token_symbol,
                     MAX_TICKER_LEN)) {
             char ticker[MAX_TICKER_LEN];
@@ -38,46 +38,46 @@ static void finalize_lookup(ethPluginFinalize_t *msg, squid_parameters_t *contex
 void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
-    if (context->valid) {
-        switch (context->selectorIndex) {
-            case CALL_BRIDGE_CALL:
-                msg->numScreens = 2;
-                finalize_lookup(msg, context);
-                break;
-            case CALL_BRIDGE:
+
+    switch (context->selectorIndex) {
+        case CALL_BRIDGE_CALL:
+            msg->numScreens = 2;
+            finalize_lookup(msg, context);
+            break;
+        case CALL_BRIDGE:
+            msg->numScreens = 3;
+            finalize_lookup(msg, context);
+            break;
+        case BRIDGE_CALL:
+        case SEND_TOKEN:
+            msg->numScreens = 2;
+            if (context->selectorIndex == SEND_TOKEN) {
                 msg->numScreens = 3;
-                finalize_lookup(msg, context);
-                break;
-            case BRIDGE_CALL:
-                msg->numScreens = 2;
-                msg->tokenLookup1 = NULL;
-                // check supported tokens custom mapping
-                // and set decimals for the specified token
-                bool success = set_ticker_for_mapped_token(context);
-                if (!success) {
-                    // The token was not found in custom mapping
-                    context->decimals_sent = DEFAULT_DECIMAL;
-                    strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
-                    // // We will need an additional screen to display a warning message.
-                    msg->numScreens++;
-                    PRINTF("Token not found in mapping\n");
-                }
-                break;
-            default:
-                PRINTF("Selector Index %d not supported\n", context->selectorIndex);
-                msg->result = ETH_PLUGIN_RESULT_ERROR;
-                break;
-        }
-
-        if (!is_chain_supported(context)) {
-            // Add a warning screen if the dest chain is not supported
-            msg->numScreens++;
-        }
-
-        msg->uiType = ETH_UI_TYPE_GENERIC;
-        msg->result = ETH_PLUGIN_RESULT_OK;
-    } else {
-        PRINTF("Context not valid\n");
-        msg->result = ETH_PLUGIN_RESULT_FALLBACK;
+            }
+            msg->tokenLookup1 = NULL;
+            // check supported tokens custom mapping
+            // and set decimals for the specified token
+            bool success = set_ticker_for_mapped_token(context);
+            if (!success) {
+                // The token was not found in custom mapping
+                context->decimals_sent = DEFAULT_DECIMAL;
+                strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
+                // // We will need an additional screen to display a warning message.
+                msg->numScreens++;
+                PRINTF("Token not found in mapping\n");
+            }
+            break;
+        default:
+            PRINTF("Selector Index %d not supported\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
     }
+
+    if (!is_chain_supported(context)) {
+        // Add a warning screen if the dest chain is not supported
+        msg->numScreens++;
+    }
+
+    msg->uiType = ETH_UI_TYPE_GENERIC;
+    msg->result = ETH_PLUGIN_RESULT_OK;
 }
