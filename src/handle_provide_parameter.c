@@ -263,11 +263,8 @@ void handle_provide_parameter(void *parameters) {
         // Skip this step, and don't forget to decrease skipping counter.
         context->skip--;
     } else {
-        if ((context->offset) &&
-            msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            PRINTF("offset: %d, parameterOffset: %d\n",
-                   context->offset,
-                   msg->parameterOffset);
+        if ((context->offset) && msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            PRINTF("offset: %d, parameterOffset: %d\n", context->offset, msg->parameterOffset);
             return;
         }
         context->offset = 0;
