@@ -15,10 +15,14 @@ static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x3c, 0x65, 0x
 // callBridge : 0xf35af1f8
 static const uint8_t SQUID_CALL_BRIDGE_SELECTOR[SELECTOR_SIZE] = {0xf3, 0x5a, 0xf1, 0xf8};
 
+// sendToken : 0x26ef699d
+static const uint8_t SQUID_SEND_TOKEN_SELECTOR[SELECTOR_SIZE] = {0x26, 0xef, 0x69, 0x9d};
+
 // Array of all the different Squid selectors.
 const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {SQUID_CALL_BRIDGE_CALL_SELECTOR,
                                                              SQUID_BRIDGE_CALL_SELECTOR,
-                                                             SQUID_CALL_BRIDGE_SELECTOR};
+                                                             SQUID_CALL_BRIDGE_SELECTOR,
+                                                             SQUID_SEND_TOKEN_SELECTOR};
 
 const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -31,6 +35,7 @@ const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] =
     {"Avalanche", "Avalanche C-Chain"},
     {"Moonbeam", "Moonbeam Mainnet"},
     {"Polygon", "Polygon"},
+    {"polygon", "Polygon"},
     {"binance", "Binance"},
     {"cosmoshub", "Cosmos Hub"},
     {"crescent", "Crescent"},
@@ -43,6 +48,7 @@ const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] =
     {"Agoric", "Agoric"},
     {"ASSETMANTLE", "AssetMantle"},
     {"Axelarnet", "Axelar"},
+    {"axelar", "Axelar"},
     {"COMDEX", "Comdex"},
     {"EVMOS", "Evmos"},
     {"fetch", "Fetch"},

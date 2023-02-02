@@ -25,6 +25,17 @@
                     "plugin": "squid"
                 }
             }
+        },
+        {
+            "address": "0x4f4495243837681061c4743b74b3eedf548d56a5",
+            "contractName": "AxelarGatewayProxyMultisig",
+            "selectors": {
+                "0x26ef699d": {
+                    "erc20OfInterest": [],
+                    "method": "sendToken",
+                    "plugin": "squid"
+                }
+            }
         }
     ],
     "name": "squid"

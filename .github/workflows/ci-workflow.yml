@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: ghcr.io/blooo-io/ledger-app-builder/ledger-app-scanner:master
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-scanner:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -94,9 +94,15 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano S
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
@@ -107,7 +113,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/squid_nanos.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/squid_nanos.elf
@@ -119,9 +125,15 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano X
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
@@ -132,7 +144,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/squid_nanox.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/squid_nanox.elf
@@ -144,9 +156,15 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano S+
         run: |
           git config --global --add safe.directory /__w/LedgerHQ-app-plugin-squid/LedgerHQ-app-plugin-squid
@@ -157,7 +175,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/squid_nanosp.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/squid_nanosp.elf
@@ -169,10 +187,10 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
@@ -184,7 +202,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanos.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanos.elf
@@ -196,10 +214,10 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
@@ -211,7 +229,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanox.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanox.elf
@@ -223,10 +241,10 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
@@ -238,7 +256,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanosp.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanosp.elf
@@ -259,9 +277,9 @@ jobs:
           echo $HOME
           echo $DISPLAY
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download built binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: binaries
           path: tests/elfs/
@@ -269,9 +287,9 @@ jobs:
         run: ls -lh ./tests/elfs
       - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
       - name: Install node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "18.12.1"
+          node-version: "14.18.1"
       - name: Install yarn
         run: |
           npm install -g yarn

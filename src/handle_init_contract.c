@@ -16,7 +16,6 @@ void handle_init_contract(void *parameters) {
 
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
-    context->valid = 1;
 
     // Determine a function to call
     size_t i;
@@ -40,6 +39,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = TOKEN_SENT;
             break;
         case BRIDGE_CALL:
+        case SEND_TOKEN:
             context->next_param = SAVE_CHAIN_OFFSET;
             break;
         default:

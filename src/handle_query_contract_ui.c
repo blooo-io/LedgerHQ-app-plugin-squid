@@ -12,6 +12,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
             }
             break;
         case BRIDGE_CALL:
+        case SEND_TOKEN:
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -19,7 +20,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
             return;
     }
     amountToString(context->amount_sent,
-                   INT256_LENGTH,
+                   AMOUNT_LENGTH,
                    context->decimals_sent,
                    context->ticker_sent,
                    msg->msg,
@@ -29,6 +30,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
 
 // Set UI for "To Asset" screen.
 static void set_to_asset_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
+    PRINTF("To Asset: %s\n", context->token_symbol);
     strlcpy(msg->title, "To Asset", msg->titleLength);
     strlcpy(msg->msg, context->token_symbol, msg->msgLength);
 }
@@ -43,6 +45,12 @@ static void set_dest_chain_ui(ethQueryContractUI_t *msg, squid_parameters_t *con
         }
     }
     strlcpy(msg->msg, context->dest_chain, msg->msgLength);
+}
+
+// Set UI for "Recipient" screen.
+static void set_recipient_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
+    strlcpy(msg->title, "Recipient", msg->titleLength);
+    strlcpy(msg->msg, context->recipient, msg->msgLength);
 }
 
 // Set UI for "Warning" screen for the token.
@@ -151,6 +159,52 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     return ERROR_SCREEN;
             }
             break;
+        case SEND_TOKEN:
+            switch (index) {
+                case 0:
+                    if (token_sent_found) {
+                        return SEND_SCREEN;
+                    } else {
+                        return WARN_TOKEN_SCREEN;
+                    }
+                case 1:
+                    if (token_sent_found && chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (token_sent_found && !chain_supported) {
+                        return WARN_CHAIN_SCREEN;
+                    } else if (!token_sent_found) {
+                        return SEND_SCREEN;
+                    }
+                case 2:
+                    if (token_sent_found && chain_supported) {
+                        return RECIPIENT_SCREEN;
+                    } else if (!token_sent_found && chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (token_sent_found && !chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (!token_sent_found && !chain_supported) {
+                        return WARN_CHAIN_SCREEN;
+                    }
+                case 3:
+                    if (!token_sent_found && !chain_supported) {
+                        return DEST_CHAIN_SCREEN;
+                    } else if (!token_sent_found && chain_supported) {
+                        return RECIPIENT_SCREEN;
+                    } else if (token_sent_found && !chain_supported) {
+                        return RECIPIENT_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
+                    }
+                case 4:
+                    if (!token_sent_found && !chain_supported) {
+                        return RECIPIENT_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
+                    }
+                default:
+                    return ERROR_SCREEN;
+            }
+            break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
@@ -176,6 +230,9 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case DEST_CHAIN_SCREEN:
             set_dest_chain_ui(msg, context);
+            break;
+        case RECIPIENT_SCREEN:
+            set_recipient_ui(msg, context);
             break;
         case WARN_TOKEN_SCREEN:
             set_token_warning_ui(msg, context);
