@@ -13,10 +13,13 @@ export async function waitForAppScreen(sim) {
 }
 
 const simOptions = {
-    logging: true,
-    X11: false,
-    startDelay: 15000,
-    startText: 'is ready'
+  logging: true,
+  startDelay: 15000,
+  startText: "Ready",
+  approveKeyword: "APPROVE",
+  rejectKeyword: "REJECT",
+  custom: "",
+  caseSensitive: false,
 };
 
 const Resolve = require('path').resolve;
@@ -25,9 +28,9 @@ const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 const APP_PATH_NANOSP = Resolve('elfs/ethereum_nanosp.elf');
 
-const PLUGIN_LIB_NANOS = { 'squid': Resolve('elfs/squid_nanos.elf') };
-const PLUGIN_LIB_NANOX = { 'squid': Resolve('elfs/squid_nanox.elf') };
-const PLUGIN_LIB_NANOSP = { 'squid': Resolve('elfs/squid_nanosp.elf') };
+const PLUGIN_LIB_NANOS = { 'squid': Resolve('elfs/plugin_nanos.elf') };
+const PLUGIN_LIB_NANOX = { 'squid': Resolve('elfs/plugin_nanox.elf') };
+const PLUGIN_LIB_NANOSP = { 'squid': Resolve('elfs/plugin_nanosp.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -44,7 +47,7 @@ let genericTx = {
 let config ;
 
 const TIMEOUT = 2000000;
-
+jest.setTimeout(TIMEOUT);
 /**
  * Generates a serializedTransaction from a rawHexTransaction copy pasted from etherscan.
  * @param {string} rawTx Raw transaction
@@ -87,7 +90,6 @@ function txFromEtherscan(rawTx) {
  */
 function zemu(device, func, testNetwork, signed = false) {
     return async () => {
-      jest.setTimeout(TIMEOUT);
       let eth_path;
       let plugin;
       let sim_options = simOptions;
