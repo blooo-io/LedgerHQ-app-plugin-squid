@@ -13,10 +13,13 @@ export async function waitForAppScreen(sim) {
 }
 
 const simOptions = {
-    logging: true,
-    X11: false,
-    startDelay: 15000,
-    startText: 'is ready'
+  logging: true,
+  startDelay: 15000,
+  startText: "Ready",
+  approveKeyword: "APPROVE",
+  rejectKeyword: "REJECT",
+  custom: "",
+  caseSensitive: false,
 };
 
 const Resolve = require('path').resolve;
@@ -44,7 +47,7 @@ let genericTx = {
 let config ;
 
 const TIMEOUT = 2000000;
-
+jest.setTimeout(TIMEOUT);
 /**
  * Generates a serializedTransaction from a rawHexTransaction copy pasted from etherscan.
  * @param {string} rawTx Raw transaction
@@ -87,7 +90,6 @@ function txFromEtherscan(rawTx) {
  */
 function zemu(device, func, testNetwork, signed = false) {
     return async () => {
-      jest.setTimeout(TIMEOUT);
       let eth_path;
       let plugin;
       let sim_options = simOptions;

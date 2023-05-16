@@ -11,6 +11,7 @@ void handle_provide_token(void *parameters) {
     PRINTF("Plugin provide tokens : 0x%p, 0x%p\n", msg->item1, msg->item2);
 
     switch (context->selectorIndex) {
+        // fall through
         case CALL_BRIDGE_CALL:
         case CALL_BRIDGE:
             if (ADDRESS_IS_NETWORK_TOKEN(context->token_sent)) {
@@ -28,13 +29,16 @@ void handle_provide_token(void *parameters) {
                 // // We will need an additional screen to display a warning message.
                 msg->additionalScreens++;
             }
+            msg->result = ETH_PLUGIN_RESULT_OK;
             break;
-        // Skip this for bridgeCall
+        // Skip this for bridgeCall and sendToken
+        // fall through
         case BRIDGE_CALL:
+        case SEND_TOKEN:
+            msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         default:
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
             break;
     }
-
-    msg->result = ETH_PLUGIN_RESULT_OK;
 }

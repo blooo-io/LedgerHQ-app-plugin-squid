@@ -8,9 +8,9 @@ static void sent_network_token(squid_parameters_t *context) {
 // Sets the ticker as the token symbol previously stored concatenated to a space
 static bool set_ticker_for_mapped_token(squid_parameters_t *context) {
     for (size_t i = 0; i < NUM_SUPPORTED_TOKENS; i++) {
-        if (!memcmp(context->token_symbol,
-                    SQUID_SUPPORTED_TOKENS[i].token_symbol,
-                    MAX_TICKER_LEN)) {
+        if (!strncmp(context->token_symbol,
+                     SQUID_SUPPORTED_TOKENS[i].token_symbol,
+                     MAX_TICKER_LEN)) {
             char ticker[MAX_TICKER_LEN];
             strlcpy(ticker, (char *) SQUID_SUPPORTED_TOKENS[i].token_symbol, sizeof(ticker));
             strlcat(ticker, " ", sizeof(ticker));
@@ -39,15 +39,25 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     squid_parameters_t *context = (squid_parameters_t *) msg->pluginContext;
 
+    msg->uiType = ETH_UI_TYPE_GENERIC;
+
+    if (!is_chain_supported(context)) {
+        // Add a warning screen if the dest chain is not supported
+        msg->numScreens++;
+    }
+
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
             msg->numScreens = 2;
             finalize_lookup(msg, context);
+            msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         case CALL_BRIDGE:
             msg->numScreens = 3;
             finalize_lookup(msg, context);
+            msg->result = ETH_PLUGIN_RESULT_OK;
             break;
+        // fall through
         case BRIDGE_CALL:
         case SEND_TOKEN:
             msg->numScreens = 2;
@@ -66,18 +76,11 @@ void handle_finalize(void *parameters) {
                 msg->numScreens++;
                 PRINTF("Token not found in mapping\n");
             }
+            msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         default:
             PRINTF("Selector Index %d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             break;
     }
-
-    if (!is_chain_supported(context)) {
-        // Add a warning screen if the dest chain is not supported
-        msg->numScreens++;
-    }
-
-    msg->uiType = ETH_UI_TYPE_GENERIC;
-    msg->result = ETH_PLUGIN_RESULT_OK;
 }

@@ -14,7 +14,7 @@ static void handle_token_sent(ethPluginProvideParameter_t *msg, squid_parameters
 
 // Stores the destination chain as a string
 static void handle_dest_chain(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
-    memcpy(context->dest_chain, msg->parameter, PARAMETER_LENGTH);
+    memcpy(context->dest_chain, msg->parameter, DEST_CHAIN_LENGTH);
 }
 
 // Stores the token symbol of the asset we are bridging to as a string
@@ -81,7 +81,7 @@ static void handle_bridge_call(ethPluginProvideParameter_t *msg, squid_parameter
         case SAVE_SYMBOL_OFFSET:
             context->saved_offset_2 =
                 U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
-            PRINTF("saved offset token symbol = %d\n", context->saved_offset_1);
+            PRINTF("saved offset token symbol = %d\n", context->saved_offset_2);
             context->next_param = AMOUNT_SENT;
             break;
         case AMOUNT_SENT:
