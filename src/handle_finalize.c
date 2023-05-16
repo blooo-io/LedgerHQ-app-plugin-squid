@@ -41,6 +41,9 @@ void handle_finalize(void *parameters) {
 
     msg->uiType = ETH_UI_TYPE_GENERIC;
 
+    // initialize the numScreens to 0
+    msg->numScreens = 0;
+
     if (!is_chain_supported(context)) {
         // Add a warning screen if the dest chain is not supported
         msg->numScreens++;
@@ -48,21 +51,21 @@ void handle_finalize(void *parameters) {
 
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
-            msg->numScreens = 2;
+            msg->numScreens += 2;
             finalize_lookup(msg, context);
             msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         case CALL_BRIDGE:
-            msg->numScreens = 3;
+            msg->numScreens += 3;
             finalize_lookup(msg, context);
             msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         // fall through
         case BRIDGE_CALL:
         case SEND_TOKEN:
-            msg->numScreens = 2;
+            msg->numScreens += 2;
             if (context->selectorIndex == SEND_TOKEN) {
-                msg->numScreens = 3;
+                msg->numScreens += 1;
             }
             msg->tokenLookup1 = NULL;
             // check supported tokens custom mapping
