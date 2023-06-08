@@ -4,6 +4,7 @@
 static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) {
     strlcpy(msg->title, "Send", msg->titleLength);
     switch (context->selectorIndex) {
+        // fall through
         case CALL_BRIDGE_CALL:
         case CALL_BRIDGE:
             // set network ticker (ETH, BNB, etc) if needed
@@ -11,6 +12,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, squid_parameters_t *context) 
                 strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
             }
             break;
+        // fall through
         case BRIDGE_CALL:
         case SEND_TOKEN:
             break;
@@ -67,7 +69,8 @@ static void set_chain_warning_ui(ethQueryContractUI_t *msg,
     strlcpy(msg->msg, "Unsupported chain", msg->msgLength);
 }
 
-// Helper function that returns the enum corresponding to the screen that should be displayed.
+// Helper function that returns the enum corresponding to the screens that should be displayed
+// for each methods.
 static screens_t get_screen(ethQueryContractUI_t *msg,
                             squid_parameters_t *context __attribute__((unused))) {
     uint8_t index = msg->screenIndex;
@@ -100,8 +103,9 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return WARN_CHAIN_SCREEN;
                     } else if (!token_sent_found) {
                         return TO_ASSET_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
-
                 case 3:
                     if (token_sent_found && chain_supported) {
                         return ERROR_SCREEN;
@@ -111,6 +115,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return DEST_CHAIN_SCREEN;
                     } else if (!token_sent_found && !chain_supported) {
                         return WARN_CHAIN_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
                 case 4:
                     if (!token_sent_found && !chain_supported) {
@@ -122,6 +128,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                     return ERROR_SCREEN;
             }
             break;
+        // fall through
         case CALL_BRIDGE_CALL:
         case BRIDGE_CALL:
             switch (index) {
@@ -138,6 +145,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return WARN_CHAIN_SCREEN;
                     } else if (!token_sent_found) {
                         return SEND_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
                 case 2:
                     if (token_sent_found && chain_supported) {
@@ -148,6 +157,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return DEST_CHAIN_SCREEN;
                     } else if (!token_sent_found && !chain_supported) {
                         return WARN_CHAIN_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
                 case 3:
                     if (!token_sent_found && !chain_supported) {
@@ -174,6 +185,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return WARN_CHAIN_SCREEN;
                     } else if (!token_sent_found) {
                         return SEND_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
                 case 2:
                     if (token_sent_found && chain_supported) {
@@ -184,6 +197,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return DEST_CHAIN_SCREEN;
                     } else if (!token_sent_found && !chain_supported) {
                         return WARN_CHAIN_SCREEN;
+                    } else {
+                        return ERROR_SCREEN;
                     }
                 case 3:
                     if (!token_sent_found && !chain_supported) {
