@@ -44,7 +44,7 @@ function generate_plugin_config(testNetwork) {
 	let res = {};
 
 	// Place holder signature
-	const PLACE_HOLDER_SIGNATURE = "3045022100f6e1a922c745e244fa3ed9a865491672808ef93f492ee0410861d748c5de201f0220160d6522499f3a84fa3e744b3b81e49e129e997b28495e58671a1169b16fa777";
+	const PLACE_HOLDER_SIGNATURE = "3045022100a539c55d7856e84e1efdc47b6af55ab472a80be06f43a272594731e335ee80c302207ab15b119e89dba3ebff4fc41417e4f222032850e9914a57b1685586a2f3c4f6";
 
 	// Iterate through contracts in b2c.json file
 	for (let contract of b2c["contracts"]) {

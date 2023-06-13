@@ -5,7 +5,7 @@ const contractName = "AxelarGatewayProxyMultisig";
 const testLabel = "ethereum_sendToken_normal_flow";
 const testDirSuffix = "sendToken_normal_flow";
 const testNetwork = "ethereum";
-const signedPlugin = false;
+const remoteABI = false;
 
 const contractAddr = "0x4f4495243837681061c4743b74b3eedf548d56a5";   // <= Address of the smart contract
 const chainID = 1;
@@ -35,5 +35,5 @@ const devices = [
 ];
 
 devices.forEach((device) =>
-    processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork)
+    processTest(device, contractName, testLabel, testDirSuffix, "", remoteABI, serializedTx, testNetwork)
 );

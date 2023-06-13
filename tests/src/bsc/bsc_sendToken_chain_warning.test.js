@@ -5,7 +5,7 @@ const contractName = "AxelarGatewayProxyMultisig";
 const testLabel = "bsc_sendToken_chain_warning";
 const testDirSuffix = "sendToken_chain_warning";
 const testNetwork = "bsc";
-const signedPlugin = false;
+const remoteABI = false;
 
 const contractAddr = "0x304acf330bbe08d1e512eefaa92f6a57871fd895";   // <= Address of the smart contract
 const chainID = 56;
@@ -36,5 +36,5 @@ const devices = [
 ];
 
 devices.forEach((device) =>
-    processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork)
+    processTest(device, contractName, testLabel, testDirSuffix, "", remoteABI, serializedTx, testNetwork)
 );

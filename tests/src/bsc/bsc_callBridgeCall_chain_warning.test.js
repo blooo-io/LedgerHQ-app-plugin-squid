@@ -5,7 +5,7 @@ const contractName = "SquidRouterProxy";
 const testLabel = "bsc_callBridgeCall_chain_warning";
 const testDirSuffix = "callBridgeCall_chain_warning";
 const testNetwork = "bsc";
-const signedPlugin = false;
+const remoteABI = false;
 
 const contractAddr = "0xce16f69375520ab01377ce7b88f5ba8c48f8d666";   // <= Address of the smart contract
 const chainID = 56;
@@ -37,5 +37,5 @@ const devices = [
 ];
 
 devices.forEach((device) =>
-    processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork)
+    processTest(device, contractName, testLabel, testDirSuffix, "", remoteABI, serializedTx, testNetwork)
 );
