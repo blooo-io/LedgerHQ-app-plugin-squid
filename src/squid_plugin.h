@@ -21,10 +21,11 @@
 
 #define TOKEN_SENT_FOUND 1
 
-#define NUM_SUPPORTED_CHAINS 25
+#define NUM_SUPPORTED_CHAINS 26
 #define NUM_SUPPORTED_TOKENS 18
 
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
+extern const uint8_t NETWORK_ETH_ADDRESS[ADDRESS_LENGTH];
 
 typedef struct tokenSymbolToDecimals_t {
     char token_symbol[MAX_TICKER_LEN];
@@ -45,7 +46,7 @@ extern const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CH
 extern const struct tokenSymbolToDecimals_t SQUID_SUPPORTED_TOKENS[NUM_SUPPORTED_TOKENS];
 
 // Returns 1 if corresponding address is the address for the chain token (ETH, BNB, MATIC,
-#define ADDRESS_IS_NETWORK_TOKEN(_addr) (!memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
+#define ADDRESS_IS_NETWORK_TOKEN(_addr) (!memcmp(_addr, NETWORK_ETH_ADDRESS, ADDRESS_LENGTH))
 
 typedef enum { CALL_BRIDGE_CALL, BRIDGE_CALL, CALL_BRIDGE, SEND_TOKEN } pluginSelector_t;
 
@@ -57,7 +58,6 @@ typedef enum {
     DEST_CHAIN_SCREEN,
     RECIPIENT_SCREEN,
     WARN_TOKEN_SCREEN,
-    WARN_CHAIN_SCREEN,
     ERROR_SCREEN,
 } screens_t;
 

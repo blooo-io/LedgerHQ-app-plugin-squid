@@ -45,6 +45,8 @@ void handle_init_contract(void *parameters) {
             break;
         // fall through
         case BRIDGE_CALL:
+            context->next_param = SAVE_SYMBOL_OFFSET;
+            break;
         case SEND_TOKEN:
             context->next_param = SAVE_CHAIN_OFFSET;
             break;
