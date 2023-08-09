@@ -62,13 +62,6 @@ static void set_token_warning_ui(ethQueryContractUI_t *msg,
     strlcpy(msg->msg, "Unknown token", msg->msgLength);
 }
 
-// Set UI for "Warning" screen for the destination chain.
-static void set_chain_warning_ui(ethQueryContractUI_t *msg,
-                                 const squid_parameters_t *context __attribute__((unused))) {
-    strlcpy(msg->title, "WARNING", msg->titleLength);
-    strlcpy(msg->msg, "Unsupported chain", msg->msgLength);
-}
-
 // Helper function that returns the enum corresponding to the screens that should be displayed
 // for each methods.
 static screens_t get_screen(ethQueryContractUI_t *msg,
@@ -76,10 +69,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
     uint8_t index = msg->screenIndex;
 
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
-    bool chain_supported = is_chain_supported(context);
 
     PRINTF("token_sent_found: %d\n", token_sent_found);
-    PRINTF("chain_supported: %d\n", chain_supported);
 
     switch (context->selectorIndex) {
         case CALL_BRIDGE:
@@ -97,29 +88,13 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return SEND_SCREEN;
                     }
                 case 2:
-                    if (token_sent_found && chain_supported) {
+                    if (token_sent_found) {
                         return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
-                    } else if (!token_sent_found) {
-                        return TO_ASSET_SCREEN;
                     } else {
-                        return ERROR_SCREEN;
+                        return TO_ASSET_SCREEN;
                     }
                 case 3:
-                    if (token_sent_found && chain_supported) {
-                        return ERROR_SCREEN;
-                    } else if (!token_sent_found && chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (!token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
-                    } else {
-                        return ERROR_SCREEN;
-                    }
-                case 4:
-                    if (!token_sent_found && !chain_supported) {
+                    if (!token_sent_found) {
                         return DEST_CHAIN_SCREEN;
                     } else {
                         return ERROR_SCREEN;
@@ -139,29 +114,13 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return WARN_TOKEN_SCREEN;
                     }
                 case 1:
-                    if (token_sent_found && chain_supported) {
+                    if (token_sent_found) {
                         return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
-                    } else if (!token_sent_found) {
-                        return SEND_SCREEN;
                     } else {
-                        return ERROR_SCREEN;
+                        return SEND_SCREEN;
                     }
                 case 2:
-                    if (token_sent_found && chain_supported) {
-                        return ERROR_SCREEN;
-                    } else if (!token_sent_found && chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (!token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
-                    } else {
-                        return ERROR_SCREEN;
-                    }
-                case 3:
-                    if (!token_sent_found && !chain_supported) {
+                    if (!token_sent_found) {
                         return DEST_CHAIN_SCREEN;
                     } else {
                         return ERROR_SCREEN;
@@ -179,39 +138,19 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                         return WARN_TOKEN_SCREEN;
                     }
                 case 1:
-                    if (token_sent_found && chain_supported) {
+                    if (token_sent_found) {
                         return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
-                    } else if (!token_sent_found) {
-                        return SEND_SCREEN;
                     } else {
-                        return ERROR_SCREEN;
+                        return SEND_SCREEN;
                     }
                 case 2:
-                    if (token_sent_found && chain_supported) {
+                    if (token_sent_found) {
                         return RECIPIENT_SCREEN;
-                    } else if (!token_sent_found && chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (!token_sent_found && !chain_supported) {
-                        return WARN_CHAIN_SCREEN;
                     } else {
-                        return ERROR_SCREEN;
+                        return DEST_CHAIN_SCREEN;
                     }
                 case 3:
-                    if (!token_sent_found && !chain_supported) {
-                        return DEST_CHAIN_SCREEN;
-                    } else if (!token_sent_found && chain_supported) {
-                        return RECIPIENT_SCREEN;
-                    } else if (token_sent_found && !chain_supported) {
-                        return RECIPIENT_SCREEN;
-                    } else {
-                        return ERROR_SCREEN;
-                    }
-                case 4:
-                    if (!token_sent_found && !chain_supported) {
+                    if (!token_sent_found) {
                         return RECIPIENT_SCREEN;
                     } else {
                         return ERROR_SCREEN;
@@ -251,9 +190,6 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case WARN_TOKEN_SCREEN:
             set_token_warning_ui(msg, context);
-            break;
-        case WARN_CHAIN_SCREEN:
-            set_chain_warning_ui(msg, context);
             break;
         default:
             PRINTF("Received an invalid screenIndex %d\n", screen);

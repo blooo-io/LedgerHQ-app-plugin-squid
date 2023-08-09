@@ -44,11 +44,6 @@ void handle_finalize(void *parameters) {
     // initialize the numScreens to 0
     msg->numScreens = 0;
 
-    if (!is_chain_supported(context)) {
-        // Add a warning screen if the dest chain is not supported
-        msg->numScreens++;
-    }
-
     switch (context->selectorIndex) {
         case CALL_BRIDGE_CALL:
             msg->numScreens += 2;

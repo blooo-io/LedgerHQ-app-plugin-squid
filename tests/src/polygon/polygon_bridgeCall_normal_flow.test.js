@@ -2,8 +2,8 @@ import { processTest, populateTransaction } from "../test.fixture";
 
 const contractName = "SquidRouterProxy";
 
-const testLabel = "polygon_bridgeCall_chain_warning";
-const testDirSuffix = "bridgeCall_chain_warning";
+const testLabel = "polygon_bridgeCall_normal_flow";
+const testDirSuffix = "bridgeCall_normal_flow";
 const testNetwork = "polygon";
 const signedPlugin = false;
 
@@ -21,17 +21,17 @@ const devices = [
     {
         name: "nanos",
         label: "Nano S",
-        steps: 8, // <= Define the number of steps for this test case and this device
+        steps: 7, // <= Define the number of steps for this test case and this device
     },
     {
         name: "nanox",
         label: "Nano X",
-        steps: 7, // <= Define the number of steps for this test case and this device
+        steps: 6, // <= Define the number of steps for this test case and this device
     },
     {
         name: "nanosp",
         label: "Nano S+",
-        steps: 7, // <= Define the number of steps for this test case and this device
+        steps: 6, // <= Define the number of steps for this test case and this device
     }
 ];
 
