@@ -2,8 +2,8 @@ import { processTest, populateTransaction } from "../test.fixture";
 
 const contractName = "AxelarGatewayProxyMultisig";
 
-const testLabel = "polygon_sendToken_token_warning_and_chain";
-const testDirSuffix = "sendToken_token_warning_and_chain";
+const testLabel = "polygon_sendToken_token_warning";
+const testDirSuffix = "sendToken_token_warning";
 const testNetwork = "polygon";
 const signedPlugin = false;
 

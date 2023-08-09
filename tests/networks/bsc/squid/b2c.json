@@ -33,10 +33,10 @@
                 "0x26ef699d": {
                     "erc20OfInterest": [],
                     "method": "sendToken",
-                    "plugin": "squid"
+                    "plugin": "Squid"
                 }
             }
         }
     ],
-    "name": "squid"
+    "name": "Squid"
 }
