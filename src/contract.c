@@ -6,8 +6,8 @@
 // https://etherscan.io/address/0xce16f69375520ab01377ce7b88f5ba8c48f8d666#code
 //
 
-// callBridgeCall : 0x8ca3bf68
-static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x8c, 0xa3, 0xbf, 0x68};
+// callBridgeCall : 0x846a1bc6
+static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x84, 0x6a, 0x1b, 0xc6};
 
 // bridgeCall : 0x21477960
 static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x21, 0x47, 0x79, 0x60};
@@ -27,6 +27,10 @@ const uint8_t *const SQUID_SELECTORS[NUM_SQUID_SELECTORS] = {SQUID_CALL_BRIDGE_C
 const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+const uint8_t NETWORK_ETH_ADDRESS[ADDRESS_LENGTH] = {0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
+                                                     0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
+                                                     0xee, 0xee, 0xee, 0xee, 0xee, 0xee};
 
 // Array containing the chains supported by squid
 const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] = {

@@ -6,12 +6,6 @@ static void handle_amount_sent(ethPluginProvideParameter_t *msg, squid_parameter
     memcpy(context->amount_sent, msg->parameter, AMOUNT_LENGTH);
 }
 
-// Stores the address of the token sent
-static void handle_token_sent(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
-    memset(context->token_sent, 0, sizeof(context->token_sent));
-    memcpy(context->token_sent, msg->parameter, ADDRESS_LENGTH);
-}
-
 // Stores the destination chain as a string
 static void handle_dest_chain(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     memcpy(context->dest_chain, msg->parameter, DEST_CHAIN_LENGTH);
@@ -35,13 +29,14 @@ static void handle_recipient_2(ethPluginProvideParameter_t *msg, squid_parameter
 static void handle_call_bridge_call(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:
-            handle_token_sent(msg, context);
+            copy_address(context->token_sent, msg->parameter, sizeof(context->token_sent));
             printf_hex_array("Token sent: 0x", ADDRESS_LENGTH, context->token_sent);
             context->next_param = AMOUNT_SENT;
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
             printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
+            context->skip += 2;  // Skip calls offset and bridgedTokenSymbol offsets
             context->next_param = SAVE_CHAIN_OFFSET;
             break;
         case SAVE_CHAIN_OFFSET:
@@ -195,7 +190,7 @@ static void handle_send_token(ethPluginProvideParameter_t *msg, squid_parameters
 static void handle_call_bridge(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:
-            handle_token_sent(msg, context);
+            copy_address(context->token_sent, msg->parameter, sizeof(context->token_sent));
             printf_hex_array("Token sent: 0x", ADDRESS_LENGTH, context->token_sent);
             context->next_param = AMOUNT_SENT;
             break;
