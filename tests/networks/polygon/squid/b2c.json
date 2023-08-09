@@ -17,7 +17,7 @@
                     "method": "bridgeCall",
                     "plugin": "Squid"
                 },
-                "0xf35af1f8": {
+                "0x52c41eb6": {
                     "erc20OfInterest": [
                         "token"
                     ],

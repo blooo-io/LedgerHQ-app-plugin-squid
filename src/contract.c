@@ -12,8 +12,8 @@ static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x84, 0x6
 // bridgeCall : 0x21477960
 static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x21, 0x47, 0x79, 0x60};
 
-// callBridge : 0xf35af1f8
-static const uint8_t SQUID_CALL_BRIDGE_SELECTOR[SELECTOR_SIZE] = {0xf3, 0x5a, 0xf1, 0xf8};
+// callBridge : 0x52c41eb6
+static const uint8_t SQUID_CALL_BRIDGE_SELECTOR[SELECTOR_SIZE] = {0x52, 0xc4, 0x1e, 0xb6};
 
 // sendToken : 0x26ef699d
 static const uint8_t SQUID_SEND_TOKEN_SELECTOR[SELECTOR_SIZE] = {0x26, 0xef, 0x69, 0x9d};
