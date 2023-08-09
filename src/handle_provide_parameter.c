@@ -72,43 +72,43 @@ static void handle_call_bridge_call(ethPluginProvideParameter_t *msg, squid_para
 
 static void handle_bridge_call(ethPluginProvideParameter_t *msg, squid_parameters_t *context) {
     switch (context->next_param) {
-        case SAVE_CHAIN_OFFSET:
-            context->saved_offset_1 =
-                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->saved_offset_1));
-            PRINTF("saved offset dest chain = %d\n", context->saved_offset_1);
-            context->next_param = SAVE_SYMBOL_OFFSET;
-            break;
         case SAVE_SYMBOL_OFFSET:
-            context->saved_offset_2 =
+            context->saved_offset_1 =
                 U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
-            PRINTF("saved offset token symbol = %d\n", context->saved_offset_2);
+            PRINTF("saved offset token symbol = %d\n", context->saved_offset_1);
             context->next_param = AMOUNT_SENT;
             break;
         case AMOUNT_SENT:
             handle_amount_sent(msg, context);
             printf_hex_array("Amount sent:", AMOUNT_LENGTH, context->amount_sent);
+            context->next_param = SAVE_CHAIN_OFFSET;
+            break;
+        case SAVE_CHAIN_OFFSET:
+            context->saved_offset_2 =
+                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->saved_offset_2));
+            PRINTF("saved offset dest chain = %d\n", context->saved_offset_2);
             context->offset = context->saved_offset_1;
             context->next_param = SKIP;
             break;
         case SKIP:
             // Skip num of characters declaration for dest chain string
             // Already skipped 1 by going in this case
-            context->next_param = DEST_CHAIN;
+            context->next_param = TOKEN_SYMBOL;
             break;
-        case DEST_CHAIN:
-            handle_dest_chain(msg, context);
-            PRINTF("dest chain: %s\n", context->dest_chain);
+        case TOKEN_SYMBOL:
+            handle_token_symbol(msg, context);
+            PRINTF("token symbol: %s\n", context->token_symbol);
             context->offset = context->saved_offset_2;
             context->next_param = SKIP_2;
             break;
         case SKIP_2:
             // Skip num of characters declaration for token symbol string
             // Already skipped 1 by going in this case
-            context->next_param = TOKEN_SYMBOL;
+            context->next_param = DEST_CHAIN;
             break;
-        case TOKEN_SYMBOL:
-            handle_token_symbol(msg, context);
-            PRINTF("token symbol: %s\n", context->token_symbol);
+        case DEST_CHAIN:
+            handle_dest_chain(msg, context);
+            PRINTF("dest chain: %s\n", context->dest_chain);
             context->next_param = NONE;
             break;
         case NONE:

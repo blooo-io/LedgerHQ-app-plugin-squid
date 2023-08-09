@@ -9,8 +9,8 @@
 // callBridgeCall : 0x8ca3bf68
 static const uint8_t SQUID_CALL_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x8c, 0xa3, 0xbf, 0x68};
 
-// bridgeCall : 0x3c659741
-static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x3c, 0x65, 0x97, 0x41};
+// bridgeCall : 0x21477960
+static const uint8_t SQUID_BRIDGE_CALL_SELECTOR[SELECTOR_SIZE] = {0x21, 0x47, 0x79, 0x60};
 
 // callBridge : 0xf35af1f8
 static const uint8_t SQUID_CALL_BRIDGE_SELECTOR[SELECTOR_SIZE] = {0xf3, 0x5a, 0xf1, 0xf8};
@@ -55,6 +55,7 @@ const struct chainIdToChainName_t SQUID_SUPPORTED_CHAINS[NUM_SUPPORTED_CHAINS] =
     {"KI", "Ki"},
     {"REGEN", "Regen"},
     {"UMEE", "Umee"},
+    {"kava", "Kava"},
 };
 
 // Array containing the most used tokens supported by squid
