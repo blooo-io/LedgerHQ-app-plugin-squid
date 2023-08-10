@@ -42,9 +42,9 @@ On these smart contracts, the functions covered by this plugin are:
 
 |    Function   | Selector  | Displayed Parameters |
 | ---           | ---       | --- |
-|callBridgeCall | 0x8ca3bf68| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
-|bridgeCall     | 0x3c659741| <table>  <tbody>  <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table>|
-|callBridge     | 0xf35af1f8| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
+|callBridgeCall | 0x846a1bc6| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
+|bridgeCall     | 0x21477960| <table>  <tbody>  <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table>|
+|callBridge     | 0x52c41eb6| <table>  <tbody>  <tr> <td><code>address token</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>string destinationChain</code></td></tr> <tr><td><code>string bridgedTokenSymbol</code></td></tr> </tbody> </table> |
 |sendToken     | 0x26ef699d| <table>  <tbody>  <tr> <td><code>string destinationChain</code></td></tr> <tr><td><code>string destinationAddress</code></td></tr> <tr><td><code>string symbol</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> </tbody> </table> |
 
 ## Build
